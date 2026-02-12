@@ -1,173 +1,746 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ur" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yariyan News | Professional Management Portal</title>
-    <!-- Tailwind CSS for Modern UI -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Urdu Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-red: #991b1b;
-            --secondary-red: #dc2626;
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>یاریاں نیوز نیٹ ورک</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&amp;family=Poppins:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        body { 
-            font-family: 'Noto Nastaliq Urdu', serif; 
-            background: #f8fafc;
-            color: #1e293b;
+
+        html, body {
+            height: 100%;
+            width: 100%;
         }
-        .urdu-text { font-family: 'Noto Nastaliq Urdu', serif; }
-        .glass-morphism {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0f172a;
+            color: #fff;
+        }
+
+        .urdu-text {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            letter-spacing: 0.5px;
+        }
+
+        .app-wrapper {
+            height: 100%;
+            width: 100%;
+            overflow-auto;
+        }
+
+        /* Animated Gradient Background */
+        .hero-bg {
+            background: linear-gradient(135deg, #1e1b4b 0%, #15803d 50%, #991b1b 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Animated shapes */
+        .floating-shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+
+        .shape1 { animation-delay: 0s; }
+        .shape2 { animation-delay: 2s; }
+        .shape3 { animation-delay: 4s; }
+
+        /* Glass effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 50%, #6bcf7f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Premium button */
+        .btn-premium {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff1744 100%);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(255, 23, 68, 0.4);
+        }
+
+        .btn-premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn-premium:hover::before {
+            left: 0;
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 48px rgba(255, 23, 68, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Input styles */
+        .input-field {
+            background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 14px 18px;
+            border-radius: 12px;
+            width: 100%;
+            font-size: 16px;
+            transition: all 0.3s ease;
         }
-        .hero-gradient {
-            background: radial-gradient(circle at top right, #dc2626, #7f1d1d);
+
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.5);
         }
-        .custom-shadow {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .logo-glow {
-            filter: drop-shadow(0 0 15px rgba(255,255,255,0.3));
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .logo-glow:hover {
-            transform: scale(1.1) rotate(3deg);
-            filter: drop-shadow(0 0 25px rgba(255,255,255,0.5));
-        }
-        .tab-transition { transition: all 0.3s ease-in-out; }
-        .hidden { display: none !important; }
-        input, select, textarea {
-            transition: all 0.2s ease;
-            border: 2px solid #e2e8f0 !important;
-        }
-        input:focus, select:focus, textarea:focus {
-            border-color: #dc2626 !important;
-            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1) !important;
+
+        .input-field:focus {
             outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #ff6b6b;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
+        }
+
+        /* Icon styles */
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff1744 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .feature-card {
+            glass;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .news-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #ff6b6b;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .news-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-8px);
+            box-shadow: 0 12px 40px rgba(255, 107, 107, 0.2);
+        }
+
+        .role-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff1744 100%);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 12px 40px rgba(16, 185, 129, 0.3);
+            animation: slideIn 0.3s ease;
+            z-index: 1000;
+            font-weight: 600;
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff1744 100%);
+            box-shadow: 0 12px 40px rgba(255, 23, 68, 0.3);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .tab-button {
+            padding: 12px 0;
+            border-bottom: 3px solid transparent;
+            background: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Noto Nastaliq Urdu', serif;
+        }
+
+        .tab-button.active {
+            color: #ff6b6b;
+            border-bottom-color: #ff6b6b;
+        }
+
+        /* Premium number counter */
+        .counter {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Hover lift effect */
+        .lift-hover {
+            transition: all 0.3s ease;
+        }
+
+        .lift-hover:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Badge pulse */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .select-field {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 14px 18px;
+            border-radius: 12px;
+            width: 100%;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .select-field option {
+            background: #1e1b4b;
+            color: white;
+        }
+
+        .select-field:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #ff6b6b;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
         }
     </style>
-</head>
-<body class="min-h-screen flex flex-col">
-
-    <!-- Navbar/Header -->
-    <header class="hero-gradient text-white pt-12 pb-24 rounded-b-[4rem] shadow-2xl relative">
-        <div class="container mx-auto px-4 text-center">
-            <div class="inline-block relative mb-6">
-                <div class="bg-white p-4 rounded-full shadow-inner border-4 border-red-500/30">
-                    <img src="https://raw.githubusercontent.com/tariq-news/yariyan-news/main/yar_00419.png" 
-                         alt="Yariyan News Logo" 
-                         class="h-24 md:h-36 w-auto object-contain logo-glow"
-                         id="mainLogo">
-                </div>
-            </div>
-            <h1 class="text-4xl md:text-6xl font-bold mb-3 tracking-tight">یاریاں نیوز نیٹ ورک</h1>
-            <p class="text-[10px] md:text-sm font-sans tracking-[0.4em] uppercase opacity-80 font-bold">The Backbone of Authentic Journalism</p>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body class="bg-slate-950">
+  <div class="app-wrapper"><!-- Hero Section with Auth -->
+   <div id="hero-section" class="hero-bg relative min-h-screen flex items-center justify-center px-4 py-8"><!-- Floating decorative shapes -->
+    <div class="floating-shape shape1 w-96 h-96 bg-red-500 rounded-full blur-3xl" style="top: 10%; right: 10%;"></div>
+    <div class="floating-shape shape2 w-72 h-72 bg-green-500 rounded-full blur-3xl" style="bottom: 20%; left: 5%;"></div>
+    <div class="floating-shape shape3 w-80 h-80 bg-purple-500 rounded-full blur-3xl" style="top: 30%; left: 50%;"></div>
+    <div class="relative z-10 max-w-5xl w-full">
+     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"><!-- Left side - Welcome content -->
+      <div class="text-center lg:text-right">
+       <div class="mb-6 inline-block">
+        <div class="w-24 h-24 bg-gradient-to-br from-red-500 to-orange-500 rounded-3xl flex items-center justify-center mx-auto lg:mx-0 pulse">
+         <svg class="w-14 h-14 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M19.5 13.5L6 2v6H2v6h4v6l13.5-11.5z" />
+         </svg>
         </div>
-        <!-- Decorative Shape -->
-        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
-            <svg class="relative block w-full h-[60px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M600,112.77C268.63,112.77,0,65.52,0,7.23V120H1200V7.23C1200,65.52,931.37,112.77,600,112.77Z" fill="#f8fafc"></path>
-            </svg>
+       </div>
+       <h1 class="urdu-text text-5xl lg:text-6xl font-black mb-4 text-white leading-tight">یاریاں نیوز<br>
+        نیٹ ورک</h1>
+       <p class="text-xl text-gray-300 mb-8 leading-relaxed">اردو صحافت کا نیا دور۔ خبریں، آپ کی اپنی زبان میں۔<br><span class="text-orange-400">حقیقی، فوری، قابل اعتماد</span></p>
+       <div class="flex gap-4 justify-center lg:justify-end flex-wrap"><button id="auth-scroll-btn" class="btn-premium">شروع کریں</button> <button class="btn-secondary">مزید جانیں</button>
+       </div>
+      </div><!-- Right side - Authentication Card -->
+      <div class="glass p-8 rounded-3xl"><!-- Tab Navigation -->
+       <div class="flex gap-8 mb-8 border-b border-white/10 pb-4"><button class="tab-button active" data-tab="login"> لاگ ان </button> <button class="tab-button" data-tab="register"> رجسٹریشن </button>
+       </div><!-- Login Form -->
+       <form id="login-form" class="tab-content">
+        <div class="mb-5"><label class="block text-sm font-bold text-gray-200 mb-3">ای میل</label> <input type="email" class="input-field" id="login-email" placeholder="your@email.com" required>
         </div>
-    </header>
-
-    <main class="flex-grow container mx-auto px-4 -mt-16 z-10">
-        <!-- Auth Card -->
-        <section id="authCard" class="max-w-md mx-auto glass-morphism rounded-[3rem] custom-shadow overflow-hidden border-t-8 border-red-700">
-            <!-- Professional Tabs -->
-            <div class="flex bg-gray-50/50">
-                <button id="tabBtnLogin" class="flex-1 py-5 text-xl font-bold tab-transition border-b-4 border-red-700 text-red-700 bg-white">لاگ ان</button>
-                <button id="tabBtnReg" class="flex-1 py-5 text-xl font-bold tab-transition text-gray-400 hover:text-gray-600 border-b-4 border-transparent">رجسٹریشن</button>
-            </div>
-
-            <div class="p-8 md:p-10">
-                <!-- Login View -->
-                <div id="loginView" class="space-y-6">
-                    <div class="space-y-2">
-                        <label class="block text-sm font-bold text-gray-700 pr-2">منصب (Your Role):</label>
-                        <select id="lRole" class="w-full p-4 rounded-2xl bg-white font-sans font-semibold text-gray-700">
-                            <option value="reporter">Reporter (رپورٹر)</option>
-                            <option value="editor">Editor (ایڈیٹر)</option>
-                            <option value="admin">Admin (ایڈمن)</option>
-                        </select>
-                    </div>
-                    <input type="email" id="lEmail" placeholder="ای میل ایڈریس" class="w-full p-4 rounded-2xl text-left font-sans" dir="ltr">
-                    <input type="password" id="lPass" placeholder="پاس ورڈ" class="w-full p-4 rounded-2xl text-left font-sans" dir="ltr">
-                    <button id="btnLogin" class="w-full bg-red-700 hover:bg-red-800 text-white py-4 rounded-2xl font-bold text-2xl shadow-lg shadow-red-200 active:scale-[0.98] transition-all">داخل ہوں</button>
-                </div>
-
-                <!-- Registration View -->
-                <div id="regView" class="hidden space-y-6">
-                    <div class="space-y-2">
-                        <label class="block text-sm font-bold text-gray-700 pr-2">نیا عہدہ منتخب کریں:</label>
-                        <select id="rRole" class="w-full p-4 rounded-2xl bg-white font-sans font-semibold text-gray-700">
-                            <option value="reporter">Reporter (رپورٹر)</option>
-                            <option value="editor">Editor (ایڈیٹر)</option>
-                            <option value="admin">Admin (ایڈمن)</option>
-                        </select>
-                    </div>
-                    <input type="text" id="rName" placeholder="مکمل نام" class="w-full p-4 rounded-2xl">
-                    <input type="email" id="rEmail" placeholder="ای میل" class="w-full p-4 rounded-2xl text-left font-sans" dir="ltr">
-                    <input type="password" id="rPass" placeholder="پاس ورڈ (کم از کم 6 ہندسے)" class="w-full p-4 rounded-2xl text-left font-sans" dir="ltr">
-                    <button id="btnRegister" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-4 rounded-2xl font-bold text-2xl shadow-lg shadow-emerald-100 active:scale-[0.98] transition-all">اکاؤنٹ بنائیں</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Dashboard View -->
-        <section id="dashboard" class="hidden max-w-3xl mx-auto glass-morphism rounded-[3rem] custom-shadow p-8 md:p-12 border-t-8 border-gray-900">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 border-b pb-6">
-                <div class="text-center md:text-right">
-                    <h2 class="text-3xl font-bold text-red-900">نیوز کنٹرول ڈیسک</h2>
-                    <div id="userProfile" class="mt-2 inline-flex items-center gap-2 bg-red-50 text-red-700 px-4 py-1.5 rounded-full text-sm font-bold border border-red-100">
-                        <span id="uNameDisplay">User</span>
-                        <span class="opacity-30">|</span>
-                        <span id="uRoleDisplay" class="uppercase font-sans">Role</span>
-                    </div>
-                </div>
-                <button id="btnLogout" class="px-6 py-2 rounded-xl border-2 border-gray-200 text-gray-500 font-bold hover:bg-red-50 hover:text-red-600 hover:border-red-100 transition-all">لاگ آؤٹ</button>
-            </div>
-
-            <div class="space-y-6">
-                <div class="space-y-2">
-                    <label class="block text-sm font-bold text-gray-600 pr-2">خبر کی سرخی (Headline):</label>
-                    <input type="text" id="newsTitle" placeholder="یہاں اہم سرخی لکھیں..." class="w-full p-5 rounded-3xl text-xl font-bold bg-white shadow-sm">
-                </div>
-                <div class="space-y-2">
-                    <label class="block text-sm font-bold text-gray-600 pr-2">خبر کی تفصیل (Content):</label>
-                    <textarea id="newsContent" rows="10" placeholder="خبر کی مکمل تفصیل یہاں تحریر کریں..." class="w-full p-6 rounded-3xl text-lg leading-relaxed bg-white shadow-sm"></textarea>
-                </div>
-                <button id="btnPost" class="w-full bg-gray-900 hover:bg-black text-white py-6 rounded-3xl font-bold text-3xl shadow-2xl flex items-center justify-center gap-4 active:scale-[0.97] transition-all">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-                    شائع کریں
-                </button>
-            </div>
-        </section>
-    </main>
-
-    <!-- Professional Loader -->
-    <div id="globalLoader" class="hidden fixed inset-0 bg-white/95 backdrop-blur-xl flex flex-col justify-center items-center z-50">
-        <div class="relative w-24 h-24">
-            <div class="absolute inset-0 border-8 border-red-100 rounded-full"></div>
-            <div class="absolute inset-0 border-8 border-red-700 rounded-full border-t-transparent animate-spin"></div>
+        <div class="mb-7"><label class="block text-sm font-bold text-gray-200 mb-3">پاس ورڈ</label> <input type="password" class="input-field" id="login-password" placeholder="••••••••" required>
+        </div><button type="button" id="login-btn" class="btn-premium w-full"> <span id="login-btn-text">لاگ ان کریں</span> </button>
+        <p class="text-center text-gray-400 text-sm mt-4">اکاؤنٹ نہیں ہے؟ <button type="button" class="text-orange-400 font-bold hover:text-orange-300" onclick="switchTab('register')">رجسٹر کریں</button></p>
+       </form><!-- Register Form (Hidden) -->
+       <form id="register-form" class="tab-content hidden">
+        <div class="mb-5"><label class="block text-sm font-bold text-gray-200 mb-3">مکمل نام</label> <input type="text" class="input-field" id="register-name" placeholder="آپ کا نام" required>
         </div>
-        <h3 class="mt-8 text-2xl font-bold text-red-900 animate-pulse">براہ کرم انتظار کریں...</h3>
-        <p class="text-gray-400 mt-2 font-sans text-xs">Yariyan News Security Verification</p>
+        <div class="mb-5"><label class="block text-sm font-bold text-gray-200 mb-3">ای میل</label> <input type="email" class="input-field" id="register-email" placeholder="your@email.com" required>
+        </div>
+        <div class="mb-5"><label class="block text-sm font-bold text-gray-200 mb-3">کردار</label> <select class="select-field" id="register-role" required> <option value="">کردار منتخب کریں</option> <option value="reporter">📰 رپورٹر</option> <option value="editor">✏️ ایڈیٹر</option> <option value="admin">👨‍💼 ایڈمن</option> </select>
+        </div>
+        <div class="mb-7"><label class="block text-sm font-bold text-gray-200 mb-3">پاس ورڈ</label> <input type="password" class="input-field" id="register-password" placeholder="••••••••" required>
+        </div><button type="button" id="register-btn" class="btn-premium w-full"> <span id="register-btn-text">اکاؤنٹ بنائیں</span> </button>
+        <p class="text-center text-gray-400 text-sm mt-4">پہلے سے اکاؤنٹ ہے؟ <button type="button" class="text-orange-400 font-bold hover:text-orange-300" onclick="switchTab('login')">لاگ ان</button></p>
+       </form>
+      </div>
+     </div><!-- Stats Section -->
+     <div class="grid grid-cols-3 gap-4 mt-16 max-w-2xl">
+      <div class="glass p-6 text-center rounded-2xl">
+       <div class="counter">
+        ۱۲۳+
+       </div>
+       <p class="text-gray-300 text-sm mt-2">خبریں شائع</p>
+      </div>
+      <div class="glass p-6 text-center rounded-2xl">
+       <div class="counter">
+        ۸۹
+       </div>
+       <p class="text-gray-300 text-sm mt-2">رپورٹرز</p>
+      </div>
+      <div class="glass p-6 text-center rounded-2xl">
+       <div class="counter">
+        ۲۴/۷
+       </div>
+       <p class="text-gray-300 text-sm mt-2">لائیو</p>
+      </div>
+     </div>
     </div>
+   </div><!-- Dashboard Section (Hidden initially) -->
+   <div id="dashboard-section" class="hidden min-h-screen bg-gradient-to-b from-slate-900 to-slate-950 px-4 py-12">
+    <div class="max-w-6xl mx-auto"><!-- Header -->
+     <div class="glass p-8 rounded-3xl mb-8">
+      <div class="flex justify-between items-start flex-wrap gap-4">
+       <div>
+        <h2 class="text-4xl font-black text-white mb-2">خوش آمدید، <span class="gradient-text" id="user-name">صارف</span></h2>
+        <div class="flex gap-2 items-center">
+         <p class="text-gray-300">کردار:</p><span class="role-badge" id="user-role">رپورٹر</span>
+        </div>
+       </div><button id="logout-btn" class="btn-secondary"> لاگ آؤٹ </button>
+      </div>
+     </div><!-- Post News Section -->
+     <div class="glass p-8 rounded-3xl mb-8">
+      <h3 class="text-3xl font-bold text-white mb-6">✍️ نیا خبر شائع کریں</h3>
+      <form id="post-form">
+       <div class="mb-6"><label class="block text-sm font-bold text-gray-200 mb-3">سرخی</label> <input type="text" class="input-field" id="post-headline" placeholder="اپنی خبر کی سرخی لکھیں" required>
+       </div>
+       <div class="mb-8"><label class="block text-sm font-bold text-gray-200 mb-3">مواد</label> <textarea class="input-field" id="post-content" placeholder="خبر کا مکمل متن لکھیں..." rows="6" required></textarea>
+       </div><button type="button" id="post-btn" class="btn-premium"> <span id="post-btn-text">🚀 شائع کریں</span> </button>
+      </form>
+     </div><!-- Features Grid -->
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="feature-card">
+       <div class="text-5xl mb-4">
+        📰
+       </div>
+       <h4 class="text-xl font-bold text-white mb-2">تازہ خبریں</h4>
+       <p class="text-gray-300 text-sm">ہر لحظہ اپ ڈیٹ رہیں</p>
+      </div>
+      <div class="feature-card">
+       <div class="text-5xl mb-4">
+        🔐
+       </div>
+       <h4 class="text-xl font-bold text-white mb-2">محفوظ شدہ</h4>
+       <p class="text-gray-300 text-sm">آپ کے ڈیٹا محفوظ</p>
+      </div>
+      <div class="feature-card">
+       <div class="text-5xl mb-4">
+        🌍
+       </div>
+       <h4 class="text-xl font-bold text-white mb-2">عالمی رسائی</h4>
+       <p class="text-gray-300 text-sm">ہر جگہ دستیاب</p>
+      </div>
+     </div><!-- News Feed Section -->
+     <div class="mb-8">
+      <h3 class="text-3xl font-bold text-white mb-6">📰 تمام خبریں</h3>
+      <div id="news-feed" class="space-y-4">
+       <div class="glass p-8 rounded-2xl text-center">
+        <p class="text-gray-400 text-lg">کوئی خبر ابھی شائع نہیں ہوئی۔</p>
+        <p class="text-gray-500 text-sm mt-2">پہلا خبر شائع کرنے والے بن جائیں! 🚀</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
 
-    <!-- Script Block -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        const defaultConfig = {
+            portal_title: 'یاریاں نیوز نیٹ ورک',
+            primary_color: '#ff6b6b',
+            accent_color: '#ff1744'
+        };
 
-        // Your Firebase Configuration
+        let config = { ...defaultConfig };
+        let currentUser = null;
+        let allNews = [];
+        let userRole = 'reporter';
+
+        // Initialize Data SDK
+        const dataHandler = {
+            onDataChanged(data) {
+                allNews = data.filter(item => item.status === 'published').sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                renderNews();
+            }
+        };
+
+        async function initDataSDK() {
+            const result = await window.dataSdk.init(dataHandler);
+            if (!result.isOk) console.error('Data SDK init failed');
+        }
+
+        // Initialize Element SDK
+        async function initElementSDK() {
+            if (!window.elementSdk) return;
+            
+            const capabilities = {
+                recolorables: [
+                    {
+                        get: () => config.primary_color || defaultConfig.primary_color,
+                        set: (value) => {
+                            config.primary_color = value;
+                            window.elementSdk.setConfig({ primary_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            };
+
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange: () => {},
+                mapToCapabilities: () => capabilities,
+                mapToEditPanelValues: (cfg) => new Map([
+                    ['portal_title', cfg.portal_title || defaultConfig.portal_title]
+                ])
+            });
+        }
+
+        // Utility functions
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(f => f.classList.add('hidden'));
+            
+            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+            document.getElementById(`${tab}-form`).classList.remove('hidden');
+        }
+
+        function showToast(message, isError = false) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${isError ? 'error' : ''}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function escapeHtml(text) {
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ur-PK', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+
+        function renderNews() {
+            const feed = document.getElementById('news-feed');
+            
+            if (allNews.length === 0) {
+                feed.innerHTML = `
+                    <div class="glass p-8 rounded-2xl text-center">
+                        <p class="text-gray-400 text-lg">کوئی خبر ابھی شائع نہیں ہوئی۔</p>
+                        <p class="text-gray-500 text-sm mt-2">پہلا خبر شائع کرنے والے بن جائیں! 🚀</p>
+                    </div>
+                `;
+                return;
+            }
+
+            feed.innerHTML = allNews.map(news => {
+                const roleLabel = { 'reporter': '📰 رپورٹر', 'editor': '✏️ ایڈیٹر', 'admin': '👨‍💼 ایڈمن' }[news.role] || news.role;
+                return `
+                    <div class="news-card">
+                        <div class="flex justify-between items-start gap-4">
+                            <div class="flex-1">
+                                <h4 class="text-2xl font-bold text-white mb-3">${escapeHtml(news.headline)}</h4>
+                                <p class="text-gray-300 mb-4 leading-relaxed">${escapeHtml(news.content)}</p>
+                                <div class="flex gap-3 flex-wrap items-center">
+                                    <span class="text-sm text-gray-400">لکھنے والے: ${escapeHtml(news.author)}</span>
+                                    <span class="role-badge">${roleLabel}</span>
+                                    <span class="text-xs text-gray-500 ml-auto">${formatDate(news.createdAt)}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Tab switching
+        document.querySelectorAll('.tab-button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                switchTab(btn.getAttribute('data-tab'));
+            });
+        });
+
+        // Login
+        document.getElementById('login-btn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+            const btn = document.getElementById('login-btn');
+            const btnText = document.getElementById('login-btn-text');
+            
+            if (!email || !password) {
+                showToast('براہ کرم تمام فیلڈز بھریں', true);
+                return;
+            }
+
+            btn.disabled = true;
+            btnText.innerHTML = '<span class="loading-spinner"></span>';
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                showToast('کامیابی سے لاگ ان ہو گئے!');
+                document.getElementById('login-form').reset();
+            } catch (error) {
+                showToast(error.message || 'لاگ ان ناکام', true);
+            } finally {
+                btn.disabled = false;
+                btnText.textContent = 'لاگ ان کریں';
+            }
+        });
+
+        // Register
+        document.getElementById('register-btn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('register-name').value.trim();
+            const email = document.getElementById('register-email').value.trim();
+            const role = document.getElementById('register-role').value;
+            const password = document.getElementById('register-password').value.trim();
+            const btn = document.getElementById('register-btn');
+            const btnText = document.getElementById('register-btn-text');
+            
+            if (!name || !email || !role || !password) {
+                showToast('براہ کرم تمام فیلڈز بھریں', true);
+                return;
+            }
+
+            if (password.length < 6) {
+                showToast('پاس ورڈ کم از کم 6 حروف ہونا چاہیے', true);
+                return;
+            }
+
+            btn.disabled = true;
+            btnText.innerHTML = '<span class="loading-spinner"></span>';
+
+            try {
+                const result = await createUserWithEmailAndPassword(auth, email, password);
+                const uid = result.user.uid;
+                
+                await updateProfile(result.user, { displayName: name });
+
+                await window.dataSdk.create({
+                    headline: `صارف: ${name}`,
+                    content: `کردار: ${role}`,
+                    role: role,
+                    author: name,
+                    email: email,
+                    createdAt: new Date().toISOString(),
+                    status: 'user'
+                });
+
+                showToast('کامیابی سے رجسٹر ہو گئے!');
+                document.getElementById('register-form').reset();
+            } catch (error) {
+                showToast(error.message || 'رجسٹریشن ناکام', true);
+            } finally {
+                btn.disabled = false;
+                btnText.textContent = 'اکاؤنٹ بنائیں';
+            }
+        });
+
+        // Post News
+        document.getElementById('post-btn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            const headline = document.getElementById('post-headline').value.trim();
+            const content = document.getElementById('post-content').value.trim();
+            const btn = document.getElementById('post-btn');
+            const btnText = document.getElementById('post-btn-text');
+            
+            if (!headline || !content) {
+                showToast('براہ کرم سرخی اور مواد بھریں', true);
+                return;
+            }
+
+            if (allNews.length >= 999) {
+                showToast('خبریں کی حد تک پہنچ گیا', true);
+                return;
+            }
+
+            btn.disabled = true;
+            btnText.innerHTML = '<span class="loading-spinner"></span>';
+
+            try {
+                const result = await window.dataSdk.create({
+                    headline: headline,
+                    content: content,
+                    role: userRole,
+                    author: currentUser.name || 'نام معلوم نہیں',
+                    email: currentUser.email,
+                    createdAt: new Date().toISOString(),
+                    status: 'published'
+                });
+
+                if (result.isOk) {
+                    showToast('خبر کامیابی سے شائع ہو گئی!');
+                    document.getElementById('post-form').reset();
+                } else {
+                    showToast('خبر شائع کرنے میں خرابی', true);
+                }
+            } catch (error) {
+                showToast('خبر شائع کرنے میں خرابی', true);
+            } finally {
+                btn.disabled = false;
+                btnText.textContent = '🚀 شائع کریں';
+            }
+        });
+
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                showToast('لاگ آؤٹ کامیاب رہا');
+            } catch (error) {
+                showToast('لاگ آؤٹ میں خرابی', true);
+            }
+        });
+
+        // Auth scroll
+        document.getElementById('auth-scroll-btn').addEventListener('click', () => {
+            document.querySelector('.glass').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        // Auth State
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = {
+                    uid: user.uid,
+                    email: user.email,
+                    name: user.displayName || 'صارف'
+                };
+                
+                document.getElementById('hero-section').classList.add('hidden');
+                document.getElementById('dashboard-section').classList.remove('hidden');
+                document.getElementById('user-name').textContent = currentUser.name;
+                
+                showToast(`خوش آمدید ${currentUser.name}! 👋`);
+            } else {
+                currentUser = null;
+                document.getElementById('hero-section').classList.remove('hidden');
+                document.getElementById('dashboard-section').classList.add('hidden');
+                allNews = [];
+                renderNews();
+            }
+        });
+
+        // Firebase Config
         const firebaseConfig = {
-            apiKey: "AIzaSyC6m-mK8p0fG5w-X-S-R-R-R",
+            apiKey: "AIzaSyDummyKeyForDemoOnly",
             authDomain: "yariyan-news-f7d9d.firebaseapp.com",
             projectId: "yariyan-news-f7d9d",
             storageBucket: "yariyan-news-f7d9d.firebasestorage.app",
@@ -177,118 +750,11 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getFirestore(app);
 
-        // UI Selectors
-        const ui = {
-            loader: document.getElementById('globalLoader'),
-            loginView: document.getElementById('loginView'),
-            regView: document.getElementById('regView'),
-            authCard: document.getElementById('authCard'),
-            dashboard: document.getElementById('dashboard'),
-            tabLogin: document.getElementById('tabBtnLogin'),
-            tabReg: document.getElementById('tabBtnReg'),
-            uNameDisplay: document.getElementById('uNameDisplay'),
-            uRoleDisplay: document.getElementById('uRoleDisplay')
-        };
-
-        // Tab Switching Functionality
-        ui.tabLogin.addEventListener('click', () => {
-            ui.loginView.classList.remove('hidden');
-            ui.regView.classList.add('hidden');
-            ui.tabLogin.className = "flex-1 py-5 text-xl font-bold tab-transition border-b-4 border-red-700 text-red-700 bg-white";
-            ui.tabReg.className = "flex-1 py-5 text-xl font-bold tab-transition text-gray-400 hover:text-gray-600 border-b-4 border-transparent bg-gray-50/50";
-        });
-
-        ui.tabReg.addEventListener('click', () => {
-            ui.regView.classList.remove('hidden');
-            ui.loginView.classList.add('hidden');
-            ui.tabReg.className = "flex-1 py-5 text-xl font-bold tab-transition border-b-4 border-emerald-600 text-emerald-700 bg-white";
-            ui.tabLogin.className = "flex-1 py-5 text-xl font-bold tab-transition text-gray-400 hover:text-gray-600 border-b-4 border-transparent bg-gray-50/50";
-        });
-
-        // Registration Logic
-        document.getElementById('btnRegister').addEventListener('click', async () => {
-            const email = document.getElementById('rEmail').value;
-            const pass = document.getElementById('rPass').value;
-            const name = document.getElementById('rName').value;
-            const role = document.getElementById('rRole').value;
-
-            if(!email || !pass || !name) return alert("براہ کرم تمام خانے پُر کریں۔");
-            if(pass.length < 6) return alert("پاس ورڈ کم از کم 6 ہندسوں کا ہونا ضروری ہے۔");
-
-            ui.loader.classList.remove('hidden');
-            try {
-                const cred = await createUserWithEmailAndPassword(auth, email, pass);
-                await setDoc(doc(db, "users", cred.user.uid), { name, role, email, created: new Date() });
-                alert("کامیابی! اکاؤنٹ بن چکا ہے، اب لاگ ان کریں۔");
-                location.reload();
-            } catch (e) { alert("Registration Error: " + e.message); }
-            ui.loader.classList.add('hidden');
-        });
-
-        // Login Logic
-        document.getElementById('btnLogin').addEventListener('click', async () => {
-            const email = document.getElementById('lEmail').value;
-            const pass = document.getElementById('lPass').value;
-            const selectedRole = document.getElementById('lRole').value;
-
-            if(!email || !pass) return alert("ای میل اور پاس ورڈ درج کریں۔");
-
-            ui.loader.classList.remove('hidden');
-            try {
-                const cred = await signInWithEmailAndPassword(auth, email, pass);
-                const userSnap = await getDoc(doc(db, "users", cred.user.uid));
-                if (userSnap.exists()) {
-                    const actualRole = userSnap.data().role;
-                    if (actualRole !== selectedRole) {
-                        await signOut(auth);
-                        alert(آپ کا عہدہ '${actualRole.toUpperCase()}' ہے، براہ کرم لاگ ان کرتے وقت درست عہدہ منتخب کریں۔);
-                    }
-                }
-            } catch (e) { alert("لاگ ان ناکام: ای میل یا پاس ورڈ غلط ہے۔"); }
-            ui.loader.classList.add('hidden');
-        });
-
-        // Post News Logic
-        document.getElementById('btnPost').addEventListener('click', async () => {
-            const title = document.getElementById('newsTitle').value;
-            const content = document.getElementById('newsContent').value;
-            if(!title || !content) return alert("خبر کی سرخی اور تفصیل دونوں ضروری ہیں۔");
-
-            ui.loader.classList.remove('hidden');
-            try {
-                await addDoc(collection(db, "news"), {
-                    title, 
-                    content, 
-                    author: auth.currentUser.email, 
-                    timestamp: new Date()
-                });
-                alert("مبارک ہو! آپ کی خبر کامیابی سے شائع ہو چکی ہے۔");
-                document.getElementById('newsTitle').value = "";
-                document.getElementById('newsContent').value = "";
-            } catch (e) { alert("Error: " + e.message); }
-            ui.loader.classList.add('hidden');
-        });
-
-        // Auth Listener (Main Switch)
-        onAuthStateChanged(auth, async (user) => {
-            if(user) {
-                ui.authCard.classList.add('hidden');
-                ui.dashboard.classList.remove('hidden');
-                const snap = await getDoc(doc(db, "users", user.uid));
-                if(snap.exists()){
-                    ui.uNameDisplay.innerText = snap.data().name;
-                    ui.uRoleDisplay.innerText = snap.data().role;
-                }
-            } else {
-                ui.authCard.classList.remove('hidden');
-                ui.dashboard.classList.add('hidden');
-            }
-        });
-
-        document.getElementById('btnLogout').addEventListener('click', () => signOut(auth));
-
+        // Initialize
+        window.switchTab = switchTab;
+        await initDataSDK();
+        await initElementSDK();
     </script>
-</body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ccb9c6f74a2de71',t:'MTc3MDg5NDMyOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
