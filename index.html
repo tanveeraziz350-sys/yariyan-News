@@ -2,7 +2,7 @@
 <html lang="ur" dir="rtl">
  <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>یاریاں نیوز نیٹ ورک</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&amp;family=Poppins:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
@@ -22,8 +22,9 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: #0f172a;
-            color: #fff;
+            background: linear-gradient(135deg, #ffffff 0%, #ffe5e5 40%, #ff6b6b 100%);
+            color: #1a1a1a;
+            overflow-x: hidden;
         }
 
         .urdu-text {
@@ -34,192 +35,291 @@
         .app-wrapper {
             height: 100%;
             width: 100%;
-            overflow-auto;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-bottom: 60px;
         }
 
-        /* Animated Gradient Background */
-        .hero-bg {
-            background: linear-gradient(135deg, #1e1b4b 0%, #15803d 50%, #991b1b 100%);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
+        /* Mobile Navigation Bottom Bar */
+        .mobile-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            z-index: 100;
+            border-top: 2px solid rgba(255,107,107,0.3);
+            box-shadow: 0 -5px 20px rgba(255, 23, 68, 0.2);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            flex: 1;
+            font-size: 12px;
+            font-weight: 600;
+            border: none;
+            background: none;
+        }
+
+        .nav-item.active {
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .nav-item:active {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 50%, #ff9999 100%);
+            padding: 40px 20px;
+            text-align: center;
             position: relative;
             overflow: hidden;
         }
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Animated shapes */
-        .floating-shape {
+        .hero-section::before {
+            content: '';
             position: absolute;
-            opacity: 0.1;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
             animation: float 6s ease-in-out infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(10deg); }
-        }
-
-        .shape1 { animation-delay: 0s; }
-        .shape2 { animation-delay: 2s; }
-        .shape3 { animation-delay: 4s; }
-
-        /* Glass effect */
-        .glass {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-        }
-
-        /* Gradient text */
-        .gradient-text {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 50%, #6bcf7f 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Premium button */
-        .btn-premium {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff1744 100%);
-            color: white;
-            border: none;
-            padding: 14px 32px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(255, 23, 68, 0.4);
-        }
-
-        .btn-premium::before {
+        .hero-section::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%);
-            transition: left 0.3s ease;
-            z-index: -1;
+            bottom: -30%;
+            left: -10%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
         }
 
-        .btn-premium:hover::before {
-            left: 0;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
         }
 
-        .btn-premium:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 48px rgba(255, 23, 68, 0.6);
+        .hero-content {
+            position: relative;
+            z-index: 2;
         }
 
-        .btn-secondary {
-            background: transparent;
+        .hero-icon {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-title {
+            font-size: 32px;
+            font-weight: 800;
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 12px 28px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
+            margin-bottom: 8px;
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+        }
+
+        /* Card Styles */
+        .card {
+            background: white;
+            border: 2px solid #ffb3b3;
+            border-radius: 16px;
+            padding: 16px;
+            margin: 12px;
+            box-shadow: 0 5px 15px rgba(255, 23, 68, 0.1);
             transition: all 0.3s ease;
         }
 
-        .btn-secondary:hover {
-            border-color: #ff6b6b;
-            color: #ff6b6b;
-            box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+        .card:active {
+            transform: scale(0.98);
         }
 
-        /* Input styles */
+        .card:hover {
+            box-shadow: 0 10px 30px rgba(255, 23, 68, 0.2);
+            border-color: #ff1744;
+        }
+
+        /* Input Fields */
         .input-field {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #ffb3b3;
+            color: #1a1a1a;
+            padding: 14px;
             border-radius: 12px;
             width: 100%;
-            font-size: 16px;
+            font-size: 14px;
+            margin-bottom: 12px;
             transition: all 0.3s ease;
-        }
-
-        .input-field::placeholder {
-            color: rgba(255, 255, 255, 0.5);
         }
 
         .input-field:focus {
             outline: none;
-            background: rgba(255, 255, 255, 0.15);
-            border-color: #ff6b6b;
-            box-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
+            border-color: #ff1744;
+            box-shadow: 0 0 15px rgba(255, 23, 68, 0.2);
         }
 
-        /* Icon styles */
-        .icon-box {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff1744 100%);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
+        .input-field::placeholder {
+            color: #ff9999;
         }
 
-        .feature-card {
-            glass;
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .news-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-left: 4px solid #ff6b6b;
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .news-card:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(-8px);
-            box-shadow: 0 12px 40px rgba(255, 107, 107, 0.2);
-        }
-
-        .role-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff1744 100%);
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%);
             color: white;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 12px;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 12px;
             font-weight: 600;
-            margin-top: 12px;
+            font-size: 14px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
         }
 
-        .loading-spinner {
+        .btn-primary:active {
+            transform: scale(0.95);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 20px rgba(255, 23, 68, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #ff1744;
+            border: 2px solid #ff1744;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-secondary:active {
+            background: rgba(255, 23, 68, 0.1);
+        }
+
+        /* Feature Icons */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 16px 12px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 16px 8px;
+            background: rgba(255, 107, 107, 0.08);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-item:active {
+            background: rgba(255, 23, 68, 0.2);
+            transform: scale(0.95);
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .feature-name {
+            font-size: 11px;
+            font-weight: 600;
+            color: #ff1744;
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            gap: 0;
+            background: white;
+            border-bottom: 2px solid #ffb3b3;
+            margin-bottom: 12px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            color: #ff9999;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: #ff1744;
+            border-bottom-color: #ff1744;
+        }
+
+        /* Badge */
+        .badge {
             display: inline-block;
-            width: 18px;
-            height: 18px;
+            background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
             border: 3px solid rgba(255, 255, 255, 0.3);
             border-top-color: white;
             border-radius: 50%;
@@ -230,228 +330,525 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Toast */
         .toast {
             position: fixed;
-            bottom: 20px;
+            bottom: 80px;
             right: 20px;
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            left: 20px;
+            background: #10b981;
             color: white;
-            padding: 16px 24px;
-            border-radius: 12px;
-            box-shadow: 0 12px 40px rgba(16, 185, 129, 0.3);
-            animation: slideIn 0.3s ease;
-            z-index: 1000;
+            padding: 14px 16px;
+            border-radius: 10px;
             font-weight: 600;
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
         }
 
         .toast.error {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff1744 100%);
-            box-shadow: 0 12px 40px rgba(255, 23, 68, 0.3);
+            background: #ff1744;
+            box-shadow: 0 8px 25px rgba(255, 23, 68, 0.3);
         }
 
-        @keyframes slideIn {
+        @keyframes slideUp {
             from {
-                transform: translateX(400px);
+                transform: translateY(100px);
                 opacity: 0;
             }
             to {
-                transform: translateX(0);
+                transform: translateY(0);
                 opacity: 1;
             }
         }
 
-        .tab-button {
-            padding: 12px 0;
-            border-bottom: 3px solid transparent;
-            background: none;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 18px;
+        /* News Feed */
+        .news-item {
+            background: white;
+            border: 2px solid #ffb3b3;
+            border-left: 5px solid #ff1744;
+            border-radius: 12px;
+            padding: 14px;
+            margin: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .news-item:active {
+            transform: translateX(-8px);
+        }
+
+        .news-headline {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .news-content {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: #999;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 20px 16px 12px;
+        }
+
+        /* Login/Register Form */
+        .form-container {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #ff1744;
+            margin-bottom: 6px;
+        }
+
+        .role-select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ffb3b3;
+            border-radius: 10px;
+            background: white;
+            color: #1a1a1a;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+
+        .role-select:focus {
+            outline: none;
+            border-color: #ff1744;
+            box-shadow: 0 0 15px rgba(255, 23, 68, 0.2);
+        }
+
+        .role-select option {
+            background: white;
+            color: #1a1a1a;
+        }
+
+        .form-switch {
+            text-align: center;
+            padding: 12px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .form-switch a {
+            color: #ff1744;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Noto Nastaliq Urdu', serif;
+            text-decoration: none;
         }
 
-        .tab-button.active {
-            color: #ff6b6b;
-            border-bottom-color: #ff6b6b;
-        }
-
-        /* Premium number counter */
-        .counter {
-            font-size: 48px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Hover lift effect */
-        .lift-hover {
-            transition: all 0.3s ease;
-        }
-
-        .lift-hover:hover {
-            transform: translateY(-5px);
-        }
-
-        /* Badge pulse */
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        .pulse {
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        .select-field {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        /* Dashboard Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%);
             color: white;
-            padding: 14px 18px;
-            border-radius: 12px;
+            padding: 20px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .welcome-text {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .user-role {
+            display: inline-block;
+        }
+
+        /* Post Form */
+        .post-section {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(255, 23, 68, 0.05) 100%);
+            padding: 16px;
+            margin: 16px 12px;
+            border-radius: 16px;
+            border: 2px dashed #ffb3b3;
+        }
+
+        .post-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+
+        .textarea-field {
             width: 100%;
-            font-size: 16px;
-            transition: all 0.3s ease;
+            padding: 12px;
+            border: 2px solid #ffb3b3;
+            border-radius: 10px;
+            background: white;
+            color: #1a1a1a;
+            font-size: 13px;
+            resize: none;
+            margin-bottom: 12px;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .select-field option {
-            background: #1e1b4b;
-            color: white;
-        }
-
-        .select-field:focus {
+        .textarea-field:focus {
             outline: none;
-            background: rgba(255, 255, 255, 0.15);
-            border-color: #ff6b6b;
-            box-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
+            border-color: #ff1744;
+            box-shadow: 0 0 15px rgba(255, 23, 68, 0.2);
+        }
+
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ffb3b3, transparent);
+            margin: 16px;
+        }
+
+        /* Notification Badge */
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff1744;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .section-container {
+            display: none;
+        }
+
+        .section-container.active {
+            display: block;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .empty-text {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .empty-subtext {
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            padding: 20px;
+        }
+
+        .profile-card {
+            background: white;
+            border: 2px solid #ffb3b3;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 12px;
+            box-shadow: 0 5px 15px rgba(255, 23, 68, 0.2);
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .profile-email {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 12px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .stat-item {
+            background: rgba(255, 23, 68, 0.08);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff1744;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-box {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 25px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: pulse 2s ease-in-out infinite;
         }
     </style>
   <style>body { box-sizing: border-box; }</style>
  </head>
- <body class="bg-slate-950">
-  <div class="app-wrapper"><!-- Hero Section with Auth -->
-   <div id="hero-section" class="hero-bg relative min-h-screen flex items-center justify-center px-4 py-8"><!-- Floating decorative shapes -->
-    <div class="floating-shape shape1 w-96 h-96 bg-red-500 rounded-full blur-3xl" style="top: 10%; right: 10%;"></div>
-    <div class="floating-shape shape2 w-72 h-72 bg-green-500 rounded-full blur-3xl" style="bottom: 20%; left: 5%;"></div>
-    <div class="floating-shape shape3 w-80 h-80 bg-purple-500 rounded-full blur-3xl" style="top: 30%; left: 50%;"></div>
-    <div class="relative z-10 max-w-5xl w-full">
-     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"><!-- Left side - Welcome content -->
-      <div class="text-center lg:text-right">
-       <div class="mb-6 inline-block">
-        <div class="w-24 h-24 bg-gradient-to-br from-red-500 to-orange-500 rounded-3xl flex items-center justify-center mx-auto lg:mx-0 pulse">
-         <svg class="w-14 h-14 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M19.5 13.5L6 2v6H2v6h4v6l13.5-11.5z" />
-         </svg>
-        </div>
-       </div>
-       <h1 class="urdu-text text-5xl lg:text-6xl font-black mb-4 text-white leading-tight">یاریاں نیوز<br>
-        نیٹ ورک</h1>
-       <p class="text-xl text-gray-300 mb-8 leading-relaxed">اردو صحافت کا نیا دور۔ خبریں، آپ کی اپنی زبان میں۔<br><span class="text-orange-400">حقیقی، فوری، قابل اعتماد</span></p>
-       <div class="flex gap-4 justify-center lg:justify-end flex-wrap"><button id="auth-scroll-btn" class="btn-premium">شروع کریں</button> <button class="btn-secondary">مزید جانیں</button>
-       </div>
-      </div><!-- Right side - Authentication Card -->
-      <div class="glass p-8 rounded-3xl"><!-- Tab Navigation -->
-       <div class="flex gap-8 mb-8 border-b border-white/10 pb-4"><button class="tab-button active" data-tab="login"> لاگ ان </button> <button class="tab-button" data-tab="register"> رجسٹریشن </button>
-       </div><!-- Login Form -->
-       <form id="login-form" class="tab-content">
-        <div class="mb-5"><label class="block text-sm font-bold text-gray-200 mb-3">ای میل</label> <input type="email" class="input-field" id="login-email" placeholder="your@email.com" required>
-        </div>
-        <div class="mb-7"><label class="block text-sm font-bold text-gray-200 mb-3">پاس ورڈ</label> <input type="password" class="input-field" id="login-password" placeholder="••••••••" required>
-        </div><button type="button" id="login-btn" class="btn-premium w-full"> <span id="login-btn-text">لاگ ان کریں</span> </button>
-        <p class="text-center text-gray-400 text-sm mt-4">اکاؤنٹ نہیں ہے؟ <button type="button" class="text-orange-400 font-bold hover:text-orange-300" onclick="switchTab('register')">رجسٹر کریں</button></p>
-       </form><!-- Register Form (Hidden) -->
-       <form id="register-form" class="tab-content hidden">
-        <div class="mb-5"><label class="block text-sm font-bold text-gray-200 mb-3">مکمل نام</label> <input type="text" class="input-field" id="register-name" placeholder="آپ کا نام" required>
-        </div>
-        <div class="mb-5"><label class="block text-sm font-bold text-gray-200 mb-3">ای میل</label> <input type="email" class="input-field" id="register-email" placeholder="your@email.com" required>
-        </div>
-        <div class="mb-5"><label class="block text-sm font-bold text-gray-200 mb-3">کردار</label> <select class="select-field" id="register-role" required> <option value="">کردار منتخب کریں</option> <option value="reporter">📰 رپورٹر</option> <option value="editor">✏️ ایڈیٹر</option> <option value="admin">👨‍💼 ایڈمن</option> </select>
-        </div>
-        <div class="mb-7"><label class="block text-sm font-bold text-gray-200 mb-3">پاس ورڈ</label> <input type="password" class="input-field" id="register-password" placeholder="••••••••" required>
-        </div><button type="button" id="register-btn" class="btn-premium w-full"> <span id="register-btn-text">اکاؤنٹ بنائیں</span> </button>
-        <p class="text-center text-gray-400 text-sm mt-4">پہلے سے اکاؤنٹ ہے؟ <button type="button" class="text-orange-400 font-bold hover:text-orange-300" onclick="switchTab('login')">لاگ ان</button></p>
-       </form>
+ <body>
+  <div class="app-wrapper" id="app"><!-- HOME SECTION -->
+   <div id="home-section" class="section-container active"><!-- Hero Header -->
+    <div class="hero-section">
+     <div class="hero-content">
+      <div class="hero-icon">
+       📰
       </div>
-     </div><!-- Stats Section -->
-     <div class="grid grid-cols-3 gap-4 mt-16 max-w-2xl">
-      <div class="glass p-6 text-center rounded-2xl">
-       <div class="counter">
-        ۱۲۳+
-       </div>
-       <p class="text-gray-300 text-sm mt-2">خبریں شائع</p>
+      <h1 class="hero-title urdu-text">یاریاں نیوز</h1>
+      <p class="hero-subtitle">اپنی خبریں، اپنی زبان میں</p>
+     </div>
+    </div><!-- Features Grid -->
+    <div class="section-title">
+     خصوصیات
+    </div>
+    <div class="feature-grid">
+     <div class="feature-item" onclick="navigateTo('browse')">
+      <div class="feature-icon">
+       📰
       </div>
-      <div class="glass p-6 text-center rounded-2xl">
-       <div class="counter">
-        ۸۹
-       </div>
-       <p class="text-gray-300 text-sm mt-2">رپورٹرز</p>
+      <div class="feature-name">
+       خبریں دیکھیں
       </div>
-      <div class="glass p-6 text-center rounded-2xl">
-       <div class="counter">
-        ۲۴/۷
-       </div>
-       <p class="text-gray-300 text-sm mt-2">لائیو</p>
+     </div>
+     <div class="feature-item" onclick="navigateTo('post')">
+      <div class="feature-icon">
+       ✍️
+      </div>
+      <div class="feature-name">
+       خبر لکھیں
+      </div>
+     </div>
+     <div class="feature-item" onclick="navigateTo('profile')">
+      <div class="feature-icon">
+       👤
+      </div>
+      <div class="feature-name">
+       پروفائل
       </div>
      </div>
     </div>
-   </div><!-- Dashboard Section (Hidden initially) -->
-   <div id="dashboard-section" class="hidden min-h-screen bg-gradient-to-b from-slate-900 to-slate-950 px-4 py-12">
-    <div class="max-w-6xl mx-auto"><!-- Header -->
-     <div class="glass p-8 rounded-3xl mb-8">
-      <div class="flex justify-between items-start flex-wrap gap-4">
-       <div>
-        <h2 class="text-4xl font-black text-white mb-2">خوش آمدید، <span class="gradient-text" id="user-name">صارف</span></h2>
-        <div class="flex gap-2 items-center">
-         <p class="text-gray-300">کردار:</p><span class="role-badge" id="user-role">رپورٹر</span>
-        </div>
-       </div><button id="logout-btn" class="btn-secondary"> لاگ آؤٹ </button>
+    <div class="divider"></div><!-- Quick Stats -->
+    <div class="section-title">
+     تازہ ترین
+    </div>
+    <div id="home-news-feed" class="mb-6">
+     <div class="empty-state">
+      <div class="empty-icon">
+       📰
       </div>
-     </div><!-- Post News Section -->
-     <div class="glass p-8 rounded-3xl mb-8">
-      <h3 class="text-3xl font-bold text-white mb-6">✍️ نیا خبر شائع کریں</h3>
-      <form id="post-form">
-       <div class="mb-6"><label class="block text-sm font-bold text-gray-200 mb-3">سرخی</label> <input type="text" class="input-field" id="post-headline" placeholder="اپنی خبر کی سرخی لکھیں" required>
-       </div>
-       <div class="mb-8"><label class="block text-sm font-bold text-gray-200 mb-3">مواد</label> <textarea class="input-field" id="post-content" placeholder="خبر کا مکمل متن لکھیں..." rows="6" required></textarea>
-       </div><button type="button" id="post-btn" class="btn-premium"> <span id="post-btn-text">🚀 شائع کریں</span> </button>
-      </form>
-     </div><!-- Features Grid -->
-     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-      <div class="feature-card">
-       <div class="text-5xl mb-4">
-        📰
-       </div>
-       <h4 class="text-xl font-bold text-white mb-2">تازہ خبریں</h4>
-       <p class="text-gray-300 text-sm">ہر لحظہ اپ ڈیٹ رہیں</p>
+      <div class="empty-text">
+       کوئی خبر نہیں
       </div>
-      <div class="feature-card">
-       <div class="text-5xl mb-4">
-        🔐
-       </div>
-       <h4 class="text-xl font-bold text-white mb-2">محفوظ شدہ</h4>
-       <p class="text-gray-300 text-sm">آپ کے ڈیٹا محفوظ</p>
-      </div>
-      <div class="feature-card">
-       <div class="text-5xl mb-4">
-        🌍
-       </div>
-       <h4 class="text-xl font-bold text-white mb-2">عالمی رسائی</h4>
-       <p class="text-gray-300 text-sm">ہر جگہ دستیاب</p>
-      </div>
-     </div><!-- News Feed Section -->
-     <div class="mb-8">
-      <h3 class="text-3xl font-bold text-white mb-6">📰 تمام خبریں</h3>
-      <div id="news-feed" class="space-y-4">
-       <div class="glass p-8 rounded-2xl text-center">
-        <p class="text-gray-400 text-lg">کوئی خبر ابھی شائع نہیں ہوئی۔</p>
-        <p class="text-gray-500 text-sm mt-2">پہلا خبر شائع کرنے والے بن جائیں! 🚀</p>
-       </div>
+      <div class="empty-subtext">
+       ابھی خبریں شائع نہیں ہوئیں
       </div>
      </div>
     </div>
+   </div><!-- BROWSE SECTION -->
+   <div id="browse-section" class="section-container">
+    <div class="section-title">
+     تمام خبریں
+    </div>
+    <div id="browse-news-feed" class="mb-6">
+     <div class="empty-state">
+      <div class="empty-icon">
+       📰
+      </div>
+      <div class="empty-text">
+       کوئی خبر نہیں
+      </div>
+     </div>
+    </div>
+   </div><!-- POST SECTION -->
+   <div id="post-section" class="section-container">
+    <div class="dashboard-header">
+     <div class="welcome-text">
+      نیا خبر شائع کریں
+     </div>
+     <p>اپنی اہم خبریں شیئر کریں</p>
+    </div>
+    <form id="post-form" class="form-container">
+     <div class="form-group"><label class="form-label">سرخی</label> <input type="text" id="post-headline" class="input-field" placeholder="خبر کی سرخی لکھیں" required>
+     </div>
+     <div class="form-group"><label class="form-label">مواد</label> <textarea id="post-content" class="textarea-field" placeholder="اپنی خبر کی تفصیل لکھیں..." rows="6" required></textarea>
+     </div><button type="button" id="post-btn" class="btn-primary"> <span id="post-btn-text">🚀 شائع کریں</span> </button>
+    </form>
+   </div><!-- PROFILE SECTION -->
+   <div id="profile-section" class="section-container">
+    <div class="dashboard-header">
+     <div class="welcome-text">
+      میری پروفائل
+     </div>
+    </div>
+    <div class="profile-section">
+     <div class="profile-card">
+      <div class="profile-avatar" id="profile-avatar">
+       👤
+      </div>
+      <div class="profile-name" id="profile-name">
+       صارف
+      </div>
+      <div class="profile-email" id="profile-email">
+       email@example.com
+      </div>
+      <div class="badge" id="profile-role">
+       رپورٹر
+      </div>
+      <div class="stats-grid">
+       <div class="stat-item">
+        <div class="stat-number" id="stat-posts">
+         0
+        </div>
+        <div class="stat-label">
+         خبریں
+        </div>
+       </div>
+       <div class="stat-item">
+        <div class="stat-number" id="stat-reads">
+         0
+        </div>
+        <div class="stat-label">
+         پڑھے گئے
+        </div>
+       </div>
+      </div>
+     </div><button id="profile-logout-btn" class="btn-secondary">🚪 لاگ آؤٹ</button> <button onclick="navigateTo('home')" class="btn-primary" style="margin-top: 12px;">واپس جائیں</button>
+    </div>
+   </div><!-- LOGIN SECTION -->
+   <div id="login-section" class="section-container">
+    <div class="hero-section">
+     <div class="logo-container">
+      <div class="logo-box">
+       🗞️
+      </div>
+     </div>
+     <h1 class="hero-title urdu-text">یاریاں نیوز</h1>
+     <p class="hero-subtitle">اپنی خبریں، اپنی زبان میں</p>
+    </div>
+    <div class="tab-nav"><button type="button" class="tab-btn active" onclick="switchLoginTab('login')">لاگ ان</button> <button type="button" class="tab-btn" onclick="switchLoginTab('register')">رجسٹریشن</button>
+    </div><!-- Login Form -->
+    <form id="login-form" class="form-container">
+     <div class="form-group"><label class="form-label">ای میل</label> <input type="email" id="login-email" class="input-field" placeholder="آپ کی ای میل" required>
+     </div>
+     <div class="form-group"><label class="form-label">پاس ورڈ</label> <input type="password" id="login-password" class="input-field" placeholder="پاس ورڈ" required>
+     </div><button type="button" id="login-btn" class="btn-primary"> <span id="login-btn-text">لاگ ان کریں</span> </button>
+     <div class="form-switch">
+      اکاؤنٹ نہیں ہے؟ <a onclick="switchLoginTab('register')">رجسٹر کریں</a>
+     </div>
+    </form><!-- Register Form (Hidden) -->
+    <form id="register-form" class="form-container" style="display: none;">
+     <div class="form-group"><label class="form-label">نام</label> <input type="text" id="register-name" class="input-field" placeholder="اپنا مکمل نام درج کریں" required>
+     </div>
+     <div class="form-group"><label class="form-label">ای میل</label> <input type="email" id="register-email" class="input-field" placeholder="ای میل درج کریں" required>
+     </div>
+     <div class="form-group"><label class="form-label">کردار منتخب کریں</label> <select id="register-role" class="role-select" required> <option value="">کردار منتخب کریں</option> <option value="reporter">📰 رپورٹر</option> <option value="editor">✏️ ایڈیٹر</option> <option value="admin">👨‍💼 ایڈمن</option> </select>
+     </div>
+     <div class="form-group"><label class="form-label">پاس ورڈ</label> <input type="password" id="register-password" class="input-field" placeholder="مضبوط پاس ورڈ بنائیں" required>
+     </div><button type="button" id="register-btn" class="btn-primary"> <span id="register-btn-text">اکاؤنٹ بنائیں</span> </button>
+     <div class="form-switch">
+      پہلے سے اکاؤنٹ ہے؟ <a onclick="switchLoginTab('login')">لاگ ان کریں</a>
+     </div>
+    </form>
    </div>
+  </div><!-- Mobile Navigation -->
+  <div class="mobile-nav" id="mobile-nav"><button class="nav-item active" onclick="navigateTo('home')" data-nav="home">
+    <div class="nav-icon">
+     🏠
+    </div>
+    <div>
+     ہوم
+    </div></button> <button class="nav-item" onclick="navigateTo('browse')" data-nav="browse">
+    <div class="nav-icon">
+     📰
+    </div>
+    <div>
+     خبریں
+    </div></button> <button class="nav-item" onclick="navigateTo('post')" data-nav="post">
+    <div class="nav-icon">
+     ✍️
+    </div>
+    <div>
+     لکھیں
+    </div></button> <button class="nav-item" onclick="navigateTo('profile')" data-nav="profile">
+    <div class="nav-icon">
+     👤
+    </div>
+    <div>
+     پروفائل
+    </div></button>
   </div>
   <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
@@ -459,20 +856,21 @@
 
         const defaultConfig = {
             portal_title: 'یاریاں نیوز نیٹ ورک',
-            primary_color: '#ff6b6b',
-            accent_color: '#ff1744'
+            primary_color: '#ff1744'
         };
 
         let config = { ...defaultConfig };
         let currentUser = null;
         let allNews = [];
         let userRole = 'reporter';
+        let userPostCount = 0;
 
         // Initialize Data SDK
         const dataHandler = {
             onDataChanged(data) {
                 allNews = data.filter(item => item.status === 'published').sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 renderNews();
+                updateStats();
             }
         };
 
@@ -486,15 +884,7 @@
             if (!window.elementSdk) return;
             
             const capabilities = {
-                recolorables: [
-                    {
-                        get: () => config.primary_color || defaultConfig.primary_color,
-                        set: (value) => {
-                            config.primary_color = value;
-                            window.elementSdk.setConfig({ primary_color: value });
-                        }
-                    }
-                ],
+                recolorables: [],
                 borderables: [],
                 fontEditable: undefined,
                 fontSizeable: undefined
@@ -510,14 +900,35 @@
             });
         }
 
-        // Utility functions
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(f => f.classList.add('hidden'));
+        // Global Navigation
+        window.navigateTo = function(section) {
+            document.querySelectorAll('.section-container').forEach(el => el.classList.remove('active'));
+            document.getElementById(section + '-section').classList.add('active');
             
-            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
-            document.getElementById(`${tab}-form`).classList.remove('hidden');
-        }
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.querySelector(`[data-nav="${section}"]`)?.classList.add('active');
+
+            if (section === 'profile' && !currentUser) {
+                navigateTo('login');
+                return;
+            }
+
+            window.scrollTo(0, 0);
+        };
+
+        window.switchLoginTab = function(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            if (tab === 'login') {
+                document.getElementById('login-form').style.display = 'block';
+                document.getElementById('register-form').style.display = 'none';
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+            } else {
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('register-form').style.display = 'block';
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+            }
+        };
 
         function showToast(message, isError = false) {
             const toast = document.createElement('div');
@@ -534,48 +945,44 @@
 
         function formatDate(dateString) {
             const date = new Date(dateString);
-            return date.toLocaleDateString('ur-PK', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            return date.toLocaleDateString('ur-PK', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
         }
 
         function renderNews() {
-            const feed = document.getElementById('news-feed');
+            const homeFeed = document.getElementById('home-news-feed');
+            const browseFeed = document.getElementById('browse-news-feed');
             
-            if (allNews.length === 0) {
-                feed.innerHTML = `
-                    <div class="glass p-8 rounded-2xl text-center">
-                        <p class="text-gray-400 text-lg">کوئی خبر ابھی شائع نہیں ہوئی۔</p>
-                        <p class="text-gray-500 text-sm mt-2">پہلا خبر شائع کرنے والے بن جائیں! 🚀</p>
-                    </div>
-                `;
-                return;
-            }
-
-            feed.innerHTML = allNews.map(news => {
-                const roleLabel = { 'reporter': '📰 رپورٹر', 'editor': '✏️ ایڈیٹر', 'admin': '👨‍💼 ایڈمن' }[news.role] || news.role;
+            const newsHTML = allNews.length === 0 ? `
+                <div class="empty-state">
+                    <div class="empty-icon">📰</div>
+                    <div class="empty-text">کوئی خبر نہیں</div>
+                </div>
+            ` : allNews.map(news => {
+                const roleEmoji = { 'reporter': '📰', 'editor': '✏️', 'admin': '👨‍💼' }[news.role] || '📰';
                 return `
-                    <div class="news-card">
-                        <div class="flex justify-between items-start gap-4">
-                            <div class="flex-1">
-                                <h4 class="text-2xl font-bold text-white mb-3">${escapeHtml(news.headline)}</h4>
-                                <p class="text-gray-300 mb-4 leading-relaxed">${escapeHtml(news.content)}</p>
-                                <div class="flex gap-3 flex-wrap items-center">
-                                    <span class="text-sm text-gray-400">لکھنے والے: ${escapeHtml(news.author)}</span>
-                                    <span class="role-badge">${roleLabel}</span>
-                                    <span class="text-xs text-gray-500 ml-auto">${formatDate(news.createdAt)}</span>
-                                </div>
-                            </div>
+                    <div class="news-item">
+                        <div class="news-headline">${escapeHtml(news.headline)}</div>
+                        <div class="news-content">${escapeHtml(news.content.substring(0, 80))}...</div>
+                        <div class="news-meta">
+                            <span>${escapeHtml(news.author)}</span>
+                            <span class="badge">${roleEmoji} ${news.role}</span>
+                            <span>${formatDate(news.createdAt)}</span>
                         </div>
                     </div>
                 `;
             }).join('');
+
+            homeFeed.innerHTML = newsHTML;
+            browseFeed.innerHTML = newsHTML;
         }
 
-        // Tab switching
-        document.querySelectorAll('.tab-button').forEach(btn => {
-            btn.addEventListener('click', () => {
-                switchTab(btn.getAttribute('data-tab'));
-            });
-        });
+        function updateStats() {
+            if (currentUser) {
+                userPostCount = allNews.filter(n => n.email === currentUser.email).length;
+                document.getElementById('stat-posts').textContent = userPostCount;
+                document.getElementById('stat-reads').textContent = allNews.length;
+            }
+        }
 
         // Login
         document.getElementById('login-btn').addEventListener('click', async (e) => {
@@ -591,14 +998,14 @@
             }
 
             btn.disabled = true;
-            btnText.innerHTML = '<span class="loading-spinner"></span>';
+            btnText.innerHTML = '<span class="spinner"></span>';
 
             try {
                 await signInWithEmailAndPassword(auth, email, password);
                 showToast('کامیابی سے لاگ ان ہو گئے!');
                 document.getElementById('login-form').reset();
             } catch (error) {
-                showToast(error.message || 'لاگ ان ناکام', true);
+                showToast('لاگ ان ناکام', true);
             } finally {
                 btn.disabled = false;
                 btnText.textContent = 'لاگ ان کریں';
@@ -616,23 +1023,22 @@
             const btnText = document.getElementById('register-btn-text');
             
             if (!name || !email || !role || !password) {
-                showToast('براہ کرم تمام فیلڈز بھریں', true);
+                showToast('تمام فیلڈز بھریں', true);
                 return;
             }
 
             if (password.length < 6) {
-                showToast('پاس ورڈ کم از کم 6 حروف ہونا چاہیے', true);
+                showToast('پاس ورڈ 6 حروف سے زیادہ ہونا چاہیے', true);
                 return;
             }
 
             btn.disabled = true;
-            btnText.innerHTML = '<span class="loading-spinner"></span>';
+            btnText.innerHTML = '<span class="spinner"></span>';
 
             try {
                 const result = await createUserWithEmailAndPassword(auth, email, password);
-                const uid = result.user.uid;
-                
                 await updateProfile(result.user, { displayName: name });
+                userRole = role;
 
                 await window.dataSdk.create({
                     headline: `صارف: ${name}`,
@@ -644,10 +1050,11 @@
                     status: 'user'
                 });
 
-                showToast('کامیابی سے رجسٹر ہو گئے!');
+                showToast('خوش آمدید! اکاؤنٹ بنایا گیا');
                 document.getElementById('register-form').reset();
+                switchLoginTab('login');
             } catch (error) {
-                showToast(error.message || 'رجسٹریشن ناکام', true);
+                showToast('رجسٹریشن ناکام', true);
             } finally {
                 btn.disabled = false;
                 btnText.textContent = 'اکاؤنٹ بنائیں';
@@ -663,7 +1070,7 @@
             const btnText = document.getElementById('post-btn-text');
             
             if (!headline || !content) {
-                showToast('براہ کرم سرخی اور مواد بھریں', true);
+                showToast('سرخی اور مواد بھریں', true);
                 return;
             }
 
@@ -673,7 +1080,7 @@
             }
 
             btn.disabled = true;
-            btnText.innerHTML = '<span class="loading-spinner"></span>';
+            btnText.innerHTML = '<span class="spinner"></span>';
 
             try {
                 const result = await window.dataSdk.create({
@@ -687,13 +1094,14 @@
                 });
 
                 if (result.isOk) {
-                    showToast('خبر کامیابی سے شائع ہو گئی!');
+                    showToast('خبر شائع ہو گئی!');
                     document.getElementById('post-form').reset();
+                    navigateTo('home');
                 } else {
-                    showToast('خبر شائع کرنے میں خرابی', true);
+                    showToast('خبر شائع نہ ہو سکی', true);
                 }
             } catch (error) {
-                showToast('خبر شائع کرنے میں خرابی', true);
+                showToast('خرابی واقع ہوئی', true);
             } finally {
                 btn.disabled = false;
                 btnText.textContent = '🚀 شائع کریں';
@@ -701,18 +1109,14 @@
         });
 
         // Logout
-        document.getElementById('logout-btn').addEventListener('click', async () => {
+        document.getElementById('profile-logout-btn').addEventListener('click', async () => {
             try {
                 await signOut(auth);
-                showToast('لاگ آؤٹ کامیاب رہا');
+                showToast('لاگ آؤٹ ہو گئے');
+                navigateTo('home');
             } catch (error) {
                 showToast('لاگ آؤٹ میں خرابی', true);
             }
-        });
-
-        // Auth scroll
-        document.getElementById('auth-scroll-btn').addEventListener('click', () => {
-            document.querySelector('.glass').scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
 
         // Auth State
@@ -724,17 +1128,20 @@
                     name: user.displayName || 'صارف'
                 };
                 
-                document.getElementById('hero-section').classList.add('hidden');
-                document.getElementById('dashboard-section').classList.remove('hidden');
-                document.getElementById('user-name').textContent = currentUser.name;
+                document.getElementById('profile-name').textContent = currentUser.name;
+                document.getElementById('profile-email').textContent = currentUser.email;
+                document.getElementById('profile-avatar').textContent = currentUser.name.charAt(0).toUpperCase();
                 
-                showToast(`خوش آمدید ${currentUser.name}! 👋`);
+                const roleEmojis = { 'reporter': '📰', 'editor': '✏️', 'admin': '👨‍💼' };
+                const roleLabels = { 'reporter': 'رپورٹر', 'editor': 'ایڈیٹر', 'admin': 'ایڈمن' };
+                
+                document.getElementById('profile-role').innerHTML = `${roleEmojis[userRole]} ${roleLabels[userRole]}`;
+                
+                updateStats();
+                navigateTo('home');
             } else {
                 currentUser = null;
-                document.getElementById('hero-section').classList.remove('hidden');
-                document.getElementById('dashboard-section').classList.add('hidden');
-                allNews = [];
-                renderNews();
+                navigateTo('login');
             }
         });
 
@@ -752,9 +1159,8 @@
         const auth = getAuth(app);
 
         // Initialize
-        window.switchTab = switchTab;
         await initDataSDK();
         await initElementSDK();
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ccb9c6f74a2de71',t:'MTc3MDg5NDMyOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ccbaba647c1de71',t:'MTc3MDg5NDk1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
