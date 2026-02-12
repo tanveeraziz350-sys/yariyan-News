@@ -1,178 +1,135 @@
 <!DOCTYPE html>
-<html lang="ur">
+<html lang="ur" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yariyan News - Professional Portal</title>
+    <title>Yariyan News - Working Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Firebase SDKs -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Nastaliq Urdu', serif; background-color: #f9fafb; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <header class="bg-red-800 text-white p-5 shadow-xl text-center">
+        <h1 class="text-4xl font-bold">یاریاں نیوز پورٹل</h1>
+        <p class="text-xs mt-2 opacity-90">رپورٹنگ اور ایڈمن کنٹرول پینل</p>
+    </header>
+
+    <main class="container mx-auto p-4 max-w-lg">
+        
+        <!-- Auth Section -->
+        <div id="authSection" class="bg-white p-8 rounded-2xl shadow-2xl border-t-8 border-red-700 mt-10">
+            <div class="flex mb-6 border-b">
+                <button onclick="switchTab('login')" id="lTab" class="w-1/2 py-3 border-b-4 border-red-700 font-bold text-red-700">لاگ ان</button>
+                <button onclick="switchTab('reg')" id="rTab" class="w-1/2 py-3 text-gray-400">رجسٹریشن</button>
+            </div>
+
+            <div id="loginForm" class="space-y-5">
+                <input type="email" id="lEmail" placeholder="ای میل (Email)" class="w-full p-4 border rounded-xl text-left outline-none focus:ring-2 ring-red-500" dir="ltr">
+                <input type="password" id="lPass" placeholder="پاس ورڈ (Password)" class="w-full p-4 border rounded-xl text-left outline-none focus:ring-2 ring-red-500" dir="ltr">
+                <button onclick="handleLogin()" class="w-full bg-red-700 text-white py-4 rounded-xl font-bold text-lg shadow-lg active:scale-95 transition">داخل ہوں</button>
+            </div>
+
+            <div id="regForm" class="hidden space-y-5">
+                <input type="text" id="rName" placeholder="مکمل نام" class="w-full p-4 border rounded-xl outline-none focus:ring-2 ring-green-500">
+                <input type="email" id="rEmail" placeholder="ای میل" class="w-full p-4 border rounded-xl text-left outline-none focus:ring-2 ring-green-500" dir="ltr">
+                <input type="password" id="rPass" placeholder="پاس ورڈ (کم از کم 6 ہندسے)" class="w-full p-4 border rounded-xl text-left outline-none focus:ring-2 ring-green-500" dir="ltr">
+                <button onclick="handleRegister()" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold text-lg shadow-lg active:scale-95 transition">اکاؤنٹ بنائیں</button>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="hidden bg-white p-6 rounded-2xl shadow-xl mt-10">
+            <div class="flex justify-between items-center mb-6 border-b pb-3">
+                <h2 class="text-2xl font-bold text-red-800">نیوز ڈیسک</h2>
+                <button onclick="logout()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-bold text-sm">لاگ آؤٹ</button>
+            </div>
+            <div class="space-y-4">
+                <input type="text" id="newsTitle" placeholder="خبر کی سرخی (Headline)..." class="w-full p-4 border-2 rounded-xl focus:border-red-600 outline-none">
+                <textarea id="newsContent" rows="6" placeholder="خبر کی تفصیل یہاں لکھیں..." class="w-full p-4 border-2 rounded-xl focus:border-red-600 outline-none"></textarea>
+                <button onclick="postNews()" class="w-full bg-red-700 text-white py-4 rounded-xl font-bold text-xl shadow-xl hover:bg-red-800 transition">پوسٹ کریں</button>
+            </div>
+        </div>
+    </main>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // --- FIREBASE CONFIGURATION ---
-        // Yahan aap apni Firebase ki API Key dalenge
         const firebaseConfig = {
-            apiKey: "", 
-            authDomain: "",
-            projectId: "",
-            storageBucket: "",
-            messagingSenderId: "",
-            appId: ""
+            apiKey: "AIzaSyC6m-mK8p0fG5w-X-S-R-R-R", 
+            authDomain: "yariyan-news-f7d9d.firebaseapp.com",
+            projectId: "yariyan-news-f7d9d",
+            storageBucket: "yariyan-news-f7d9d.firebasestorage.app",
+            messagingSenderId: "857500350438",
+            appId: "1:857500350438:web:75862086c8f6580f557342"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // UI Elements
-        const authSection = document.getElementById('authSection');
-        const reporterPortal = document.getElementById('reporterPortal');
-        const editorPortal = document.getElementById('editorPortal');
-        const adminPortal = document.getElementById('adminPortal');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const loading = document.getElementById('loading');
-
-        // Check Auth State
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const docSnap = await getDoc(doc(db, "users", user.uid));
-                if (docSnap.exists()) {
-                    showPortal(docSnap.data().role, docSnap.data().name);
-                }
+        window.switchTab = (tab) => {
+            if(tab === 'login') {
+                document.getElementById('loginForm').classList.remove('hidden');
+                document.getElementById('regForm').classList.add('hidden');
+                document.getElementById('lTab').className = "w-1/2 py-3 border-b-4 border-red-700 font-bold text-red-700";
+                document.getElementById('rTab').className = "w-1/2 py-3 text-gray-400";
             } else {
-                authSection.classList.remove('hidden');
-                logoutBtn.classList.add('hidden');
-                hideAllPortals();
+                document.getElementById('loginForm').classList.add('hidden');
+                document.getElementById('regForm').classList.remove('hidden');
+                document.getElementById('rTab').className = "w-1/2 py-3 border-b-4 border-green-600 font-bold text-green-600";
+                document.getElementById('lTab').className = "w-1/2 py-3 text-gray-400";
+            }
+        }
+
+        window.handleRegister = async () => {
+            const email = document.getElementById('rEmail').value;
+            const pass = document.getElementById('rPass').value;
+            const name = document.getElementById('rName').value;
+            if(!email || !pass || !name) return alert("Tamam khane pure karein!");
+            try {
+                const res = await createUserWithEmailAndPassword(auth, email, pass);
+                await setDoc(doc(db, "users", res.user.uid), { name, email, role: 'reporter' });
+                alert("Account ban gaya! Ab login karein.");
+                location.reload();
+            } catch (e) { alert("Registration Fail: " + e.message); }
+        }
+
+        window.handleLogin = async () => {
+            const email = document.getElementById('lEmail').value;
+            const pass = document.getElementById('lPass').value;
+            try { await signInWithEmailAndPassword(auth, email, pass); } 
+            catch (e) { alert("Login Fail: Email ya Password galat hai."); }
+        }
+
+        window.postNews = async () => {
+            const title = document.getElementById('newsTitle').value;
+            const content = document.getElementById('newsContent').value;
+            if(!title || !content) return alert("Headline aur Content dono likhna zaroori hain.");
+            try {
+                await addDoc(collection(db, "news"), { title, content, time: new Date(), author: auth.currentUser.email });
+                alert("Mubarak Ho! News Post Ho Gayi.");
+                document.getElementById('newsTitle').value = "";
+                document.getElementById('newsContent').value = "";
+            } catch (e) { alert("Error: " + e.message); }
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            if(user) {
+                document.getElementById('authSection').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+            } else {
+                document.getElementById('authSection').classList.remove('hidden');
+                document.getElementById('dashboard').classList.add('hidden');
             }
         });
 
-        // Register Function
-        window.handleRegister = async () => {
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            const pass = document.getElementById('regPass').value;
-            const role = document.getElementById('regRole').value;
-
-            if(!name || !email || !pass) return alert("Tamam khane pure karein");
-
-            try {
-                const res = await createUserWithEmailAndPassword(auth, email, pass);
-                await setDoc(doc(db, "users", res.user.uid), {
-                    name: name,
-                    email: email,
-                    role: role
-                });
-                alert("Registration Kamyab!");
-            } catch (err) { alert("Error: " + err.message); }
-        };
-
-        // Login Function
-        window.handleLogin = async () => {
-            const email = document.getElementById('loginEmail').value;
-            const pass = document.getElementById('loginPass').value;
-
-            try {
-                await signInWithEmailAndPassword(auth, email, pass);
-            } catch (err) { alert("Login Fail: " + err.message); }
-        };
-
-        // Logout
-        window.handleLogout = () => signOut(auth);
-
-        function showPortal(role, name) {
-            authSection.classList.add('hidden');
-            logoutBtn.classList.remove('hidden');
-            hideAllPortals();
-            if(role === 'reporter') {
-                reporterPortal.classList.remove('hidden');
-                document.getElementById('userNameRep').innerText = name;
-            }
-            if(role === 'editor') editorPortal.classList.remove('hidden');
-            if(role === 'admin') adminPortal.classList.remove('hidden');
-        }
-
-        function hideAllPortals() {
-            reporterPortal.classList.add('hidden');
-            editorPortal.classList.add('hidden');
-            adminPortal.classList.add('hidden');
-        }
+        window.logout = () => signOut(auth);
     </script>
-    <style>
-        body { font-family: 'Noto Sans Arabic', sans-serif; direction: rtl; }
-        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
-    </style>
-</head>
-<body class="bg-gray-100 min-h-screen">
-
-<div id="app" class="max-w-md mx-auto min-h-screen flex flex-col">
-    <header class="bg-red-700 text-white p-4 shadow-lg flex justify-between items-center">
-        <h1 class="text-xl font-bold">یاریاں نیوز پورٹل</h1>
-        <button id="logoutBtn" onclick="handleLogout()" class="hidden bg-red-900 px-3 py-1 rounded text-sm">لاگ آؤٹ</button>
-    </header>
-
-    <main class="flex-grow p-4">
-        <!-- AUTH SECTION -->
-        <div id="authSection" class="hidden glass p-6 rounded-2xl shadow-xl mt-10">
-            <div class="flex border-b mb-6 text-center">
-                <button onclick="showTab('login')" id="tabLogin" class="w-1/2 py-2 border-b-2 border-red-700 font-bold text-red-700">لاگ ان</button>
-                <button onclick="showTab('register')" id="tabRegister" class="w-1/2 py-2 text-gray-500">رجسٹریشن</button>
-            </div>
-
-            <div id="loginForm">
-                <input type="email" id="loginEmail" placeholder="ای میل" class="w-full p-3 mb-4 border rounded-lg text-right">
-                <input type="password" id="loginPass" placeholder="پاس ورڈ" class="w-full p-3 mb-6 border rounded-lg text-right">
-                <button onclick="handleLogin()" class="w-full bg-red-700 text-white py-3 rounded-lg font-bold">داخل ہوں</button>
-            </div>
-
-            <div id="registerForm" class="hidden">
-                <input type="text" id="regName" placeholder="مکمل نام" class="w-full p-3 mb-4 border rounded-lg text-right">
-                <input type="email" id="regEmail" placeholder="ای میل" class="w-full p-3 mb-4 border rounded-lg text-right">
-                <select id="regRole" class="w-full p-3 mb-4 border rounded-lg text-right">
-                    <option value="reporter">رپورٹر (Reporter)</option>
-                    <option value="editor">ایڈیٹر (Editor)</option>
-                    <option value="admin">ایڈمن (Admin)</option>
-                </select>
-                <input type="password" id="regPass" placeholder="پاس ورڈ بنائیں" class="w-full p-3 mb-6 border rounded-lg text-right">
-                <button onclick="handleRegister()" class="w-full bg-green-600 text-white py-3 rounded-lg font-bold">رجسٹر کریں</button>
-            </div>
-        </div>
-
-        <!-- PORTALS (Initially Hidden) -->
-        <div id="reporterPortal" class="hidden">
-            <h2 class="font-bold text-blue-700">رپورٹر ڈیش بورڈ: <span id="userNameRep" class="text-black"></span></h2>
-            <textarea id="newsContent" rows="5" class="w-full p-3 mt-4 border rounded-lg text-right" placeholder="اپنی خبر یہاں لکھیں..."></textarea>
-            <button class="w-full bg-blue-600 text-white py-3 mt-4 rounded-lg">خبر بھیجیں</button>
-        </div>
-
-        <div id="editorPortal" class="hidden">
-            <h2 class="font-bold text-orange-700 text-center">ایڈیٹر پینل</h2>
-            <p class="text-center mt-10 text-gray-500">خبریں ریویو کے لیے یہاں نظر آئیں گی</p>
-        </div>
-
-        <div id="adminPortal" class="hidden">
-            <h2 class="font-bold text-red-700 text-center">ایڈمن کنٹرول</h2>
-            <div class="mt-6 bg-white p-4 rounded-lg shadow text-center">صرف آپ ہی یوزرز کو مینیج کر سکتے ہیں</div>
-        </div>
-    </main>
-</div>
-
-<script>
-    window.showTab = (tab) => {
-        if(tab === 'login') {
-            document.getElementById('loginForm').classList.remove('hidden');
-            document.getElementById('registerForm').classList.add('hidden');
-            document.getElementById('tabLogin').className = "w-1/2 py-2 border-b-2 border-red-700 font-bold text-red-700";
-            document.getElementById('tabRegister').className = "w-1/2 py-2 text-gray-500";
-        } else {
-            document.getElementById('loginForm').classList.add('hidden');
-            document.getElementById('registerForm').classList.remove('hidden');
-            document.getElementById('tabRegister').className = "w-1/2 py-2 border-b-2 border-red-700 font-bold text-red-700";
-            document.getElementById('tabLogin').className = "w-1/2 py-2 text-gray-500";
-        }
-    }
-</script>
 </body>
 </html>
