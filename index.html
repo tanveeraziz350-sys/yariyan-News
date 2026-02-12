@@ -3,115 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yariyan News - Professional Portal</title>
+    <title>یاریاں نیوز - مینجمنٹ پورٹل</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { 
             font-family: 'Noto Nastaliq Urdu', serif; 
-            background-color: #f8fafc;
+            background-color: #f1f5f9;
         }
         .hidden { display: none !important; }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.9);
+        .logo-box {
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.4));
+            transition: all 0.4s ease;
+        }
+        .logo-box:hover { transform: scale(1.08) rotate(2deg); }
+        .glass-ui {
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border-radius: 2rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-        }
-        .header-gradient {
-            background: linear-gradient(135deg, #7f1d1d 0%, #dc2626 100%);
-        }
-        .logo-img {
-            max-width: 180px;
-            height: auto;
-            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.4));
+            border-radius: 2.5rem;
+            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.2);
         }
     </style>
 </head>
-<body class="min-h-screen">
+<body class="min-h-screen pb-12">
 
-    <!-- Header Section -->
-    <header class="header-gradient text-white pt-10 pb-16 px-4 shadow-2xl rounded-b-[4rem] text-center relative z-0">
+    <!-- Header & Logo -->
+    <header class="bg-gradient-to-br from-red-950 via-red-800 to-red-900 text-white pt-12 pb-24 px-4 rounded-b-[4rem] text-center shadow-2xl">
         <div class="container mx-auto">
-            <!-- Logo - Link Fixed -->
             <div class="flex justify-center mb-6">
-                <img src="https://raw.githubusercontent.com/tariq-news/yariyan-news/main/yar_00419.png" 
-                     alt="Yariyan News" 
-                     class="logo-img transition-transform hover:scale-110"
-                     id="mainLogo">
+                <div class="bg-white p-3 rounded-full shadow-2xl logo-box border-4 border-red-500/20">
+                    <!-- GitHub Raw Link for Logo -->
+                    <img src="https://raw.githubusercontent.com/tariq-news/yariyan-news/main/yar_00419.png" 
+                         alt="Yariyan News Logo" 
+                         class="h-28 md:h-36 w-auto object-contain"
+                         id="appLogo">
+                </div>
             </div>
-            <h1 class="text-4xl font-bold tracking-tight mb-2">یاریاں نیوز پورٹل</h1>
-            <p class="text-xs uppercase tracking-widest opacity-75 font-sans">Official Management Dashboard</p>
+            <h1 class="text-4xl md:text-5xl font-bold mb-2">یاریاں نیوز نیٹ ورک</h1>
+            <p class="text-[10px] md:text-xs font-sans tracking-[0.3em] opacity-70 uppercase font-bold">Official Control Center</p>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 -mt-12 relative z-10 pb-20">
+    <main class="container mx-auto px-4 -mt-16 relative z-10">
         
-        <!-- Auth Section -->
-        <div id="authSection" class="max-w-md mx-auto glass-card p-8 border-t-8 border-red-700">
-            <!-- Tabs -->
-            <div class="flex mb-8 justify-center gap-4 border-b pb-4">
-                <button onclick="switchTab('login')" id="lTab" class="w-1/2 py-2 text-xl font-bold text-red-700 border-b-4 border-red-700">لاگ ان</button>
-                <button onclick="switchTab('reg')" id="rTab" class="w-1/2 py-2 text-xl font-bold text-gray-400 hover:text-gray-600 transition-all">رجسٹریشن</button>
+        <!-- Auth System -->
+        <div id="authCard" class="max-w-md mx-auto glass-ui overflow-hidden border border-white">
+            <div class="flex border-b border-gray-100">
+                <button id="tabLogin" class="w-1/2 py-5 text-xl font-bold border-b-4 border-red-700 text-red-700 bg-red-50/50">لاگ ان</button>
+                <button id="tabReg" class="w-1/2 py-5 text-xl font-bold text-gray-400 hover:bg-gray-50">رجسٹریشن</button>
             </div>
 
-            <!-- Login Form -->
-            <div id="loginForm" class="space-y-6">
-                <div>
-                    <label class="block text-gray-700 text-sm font-bold mb-2 pr-2">اپنا عہدہ منتخب کریں:</label>
-                    <select id="lRole" class="w-full p-4 border rounded-2xl bg-gray-50 focus:ring-2 ring-red-500 outline-none font-sans">
-                        <option value="reporter">Reporter (رپورٹر)</option>
-                        <option value="editor">Editor (ایڈیٹر)</option>
-                        <option value="admin">Admin (ایڈمن)</option>
-                    </select>
+            <div class="p-8">
+                <!-- Login -->
+                <div id="loginForm" class="space-y-6">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2 pr-2">اپنا عہدہ منتخب کریں:</label>
+                        <select id="lRole" class="w-full p-4 border-2 border-gray-100 rounded-2xl bg-gray-50 focus:border-red-600 outline-none font-sans appearance-none">
+                            <option value="reporter">Reporter (رپورٹر)</option>
+                            <option value="editor">Editor (ایڈیٹر)</option>
+                            <option value="admin">Admin (ایڈمن)</option>
+                        </select>
+                    </div>
+                    <input type="email" id="lEmail" placeholder="ای میل (Email)" class="w-full p-4 border-2 border-gray-100 rounded-2xl focus:border-red-600 outline-none text-left font-sans" dir="ltr">
+                    <input type="password" id="lPass" placeholder="پاس ورڈ (Password)" class="w-full p-4 border-2 border-gray-100 rounded-2xl focus:border-red-600 outline-none text-left font-sans" dir="ltr">
+                    <button id="btnActionLogin" class="w-full bg-red-700 hover:bg-red-800 text-white py-4 rounded-2xl font-bold text-xl shadow-xl transform active:scale-95 transition-all">داخل ہوں</button>
                 </div>
-                <input type="email" id="lEmail" placeholder="ای میل (Email)" class="w-full p-4 border rounded-2xl focus:ring-2 ring-red-500 outline-none text-left font-sans" dir="ltr">
-                <input type="password" id="lPass" placeholder="پاس ورڈ (Password)" class="w-full p-4 border rounded-2xl focus:ring-2 ring-red-500 outline-none text-left font-sans" dir="ltr">
-                <button onclick="handleLogin()" class="w-full bg-red-700 hover:bg-red-800 text-white py-4 rounded-2xl font-bold text-xl shadow-xl active:scale-95 transition-all">داخل ہوں</button>
-            </div>
 
-            <!-- Registration Form -->
-            <div id="regForm" class="hidden space-y-6">
-                <div>
-                    <label class="block text-gray-700 text-sm font-bold mb-2 pr-2">عہدہ منتخب کریں:</label>
-                    <select id="rRole" class="w-full p-4 border rounded-2xl bg-gray-50 focus:ring-2 ring-green-600 outline-none font-sans">
-                        <option value="reporter">Reporter (رپورٹر)</option>
-                        <option value="editor">Editor (ایڈیٹر)</option>
-                        <option value="admin">Admin (ایڈمن)</option>
-                    </select>
+                <!-- Registration -->
+                <div id="regForm" class="hidden space-y-6">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2 pr-2">نیا عہدہ منتخب کریں:</label>
+                        <select id="rRole" class="w-full p-4 border-2 border-gray-100 rounded-2xl bg-gray-50 focus:border-green-600 outline-none font-sans appearance-none">
+                            <option value="reporter">Reporter (رپورٹر)</option>
+                            <option value="editor">Editor (ایڈیٹر)</option>
+                            <option value="admin">Admin (ایڈمن)</option>
+                        </select>
+                    </div>
+                    <input type="text" id="rName" placeholder="مکمل نام" class="w-full p-4 border-2 border-gray-100 rounded-2xl focus:border-green-600 outline-none">
+                    <input type="email" id="rEmail" placeholder="ای میل" class="w-full p-4 border-2 border-gray-100 rounded-2xl focus:border-green-600 outline-none text-left font-sans" dir="ltr">
+                    <input type="password" id="rPass" placeholder="پاس ورڈ" class="w-full p-4 border-2 border-gray-100 rounded-2xl focus:border-green-600 outline-none text-left font-sans" dir="ltr">
+                    <button id="btnActionReg" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-2xl font-bold text-xl shadow-xl transform active:scale-95 transition-all">اکاؤنٹ بنائیں</button>
                 </div>
-                <input type="text" id="rName" placeholder="مکمل نام" class="w-full p-4 border rounded-2xl focus:ring-2 ring-green-600 outline-none">
-                <input type="email" id="rEmail" placeholder="ای میل (Email)" class="w-full p-4 border rounded-2xl focus:ring-2 ring-green-600 outline-none text-left font-sans" dir="ltr">
-                <input type="password" id="rPass" placeholder="پاس ورڈ (کم از کم 6 ہندسے)" class="w-full p-4 border rounded-2xl focus:ring-2 ring-green-600 outline-none text-left font-sans" dir="ltr">
-                <button onclick="handleRegister()" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-2xl font-bold text-xl shadow-xl active:scale-95 transition-all">اکاؤنٹ بنائیں</button>
             </div>
         </div>
 
-        <!-- Dashboard Section -->
-        <div id="dashboard" class="hidden max-w-2xl mx-auto glass-card p-8 border-t-8 border-gray-800">
-            <div class="flex justify-between items-center mb-8 border-b pb-4">
+        <!-- Dashboard (Hidden) -->
+        <div id="dashboard" class="hidden max-w-2xl mx-auto glass-ui p-8 mt-4 border border-white">
+            <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-5">
                 <div>
-                    <h2 class="text-2xl font-bold text-red-800">نیوز ڈیش بورڈ</h2>
-                    <span id="roleBadge" class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-lg mt-2 inline-block font-sans font-bold">Role</span>
+                    <h2 class="text-2xl font-bold text-red-800">نیوز ڈیسک</h2>
+                    <div id="roleBadge" class="mt-2 text-[10px] font-sans font-bold bg-red-100 text-red-800 px-3 py-1 rounded-full border border-red-200">Role</div>
                 </div>
-                <button onclick="logout()" class="text-gray-500 hover:text-red-700 font-bold transition-colors">لاگ آؤٹ</button>
+                <button id="btnLogout" class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-5 py-2 rounded-xl font-bold text-sm transition-all">لاگ آؤٹ</button>
             </div>
 
-            <div class="space-y-4">
-                <input type="text" id="newsTitle" placeholder="خبر کی سرخی (Headline)..." class="w-full p-4 border rounded-2xl focus:ring-2 ring-red-600 outline-none text-lg font-bold shadow-sm">
-                <textarea id="newsContent" rows="8" placeholder="خبر کی تفصیل یہاں لکھیں..." class="w-full p-4 border rounded-2xl focus:ring-2 ring-red-600 outline-none leading-relaxed shadow-sm"></textarea>
-                <button onclick="postNews()" class="w-full bg-gray-900 hover:bg-black text-white py-4 rounded-2xl font-bold text-2xl shadow-2xl flex items-center justify-center gap-3 active:scale-95 transition-all">
+            <div class="space-y-5">
+                <input type="text" id="newsTitle" placeholder="خبر کی سرخی (Headline)..." class="w-full p-4 border-2 border-gray-50 rounded-2xl focus:border-red-600 outline-none text-xl font-bold bg-gray-50">
+                <textarea id="newsContent" rows="8" placeholder="خبر کی مکمل تفصیل یہاں لکھیں..." class="w-full p-4 border-2 border-gray-50 rounded-2xl focus:border-red-600 outline-none leading-relaxed bg-gray-50"></textarea>
+                <button id="btnPostNews" class="w-full bg-red-800 hover:bg-black text-white py-5 rounded-2xl font-bold text-2xl shadow-2xl flex items-center justify-center gap-3 active:scale-95 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-                    پوسٹ کریں
+                    شائع کریں
                 </button>
             </div>
         </div>
     </main>
 
-    <!-- Loader -->
-    <div id="loader" class="hidden fixed inset-0 bg-white/90 backdrop-blur-sm flex flex-col justify-center items-center z-50">
-        <div class="animate-spin rounded-full h-20 w-20 border-t-4 border-red-700"></div>
-        <p class="mt-4 font-bold text-red-800 animate-pulse">براہ کرم انتظار کریں...</p>
+    <!-- Global Loader -->
+    <div id="overlay" class="hidden fixed inset-0 bg-white/90 backdrop-blur-lg flex flex-col justify-center items-center z-50">
+        <div class="w-24 h-24 border-8 border-gray-100 border-t-red-700 rounded-full animate-spin"></div>
+        <p class="mt-6 font-bold text-red-900 animate-pulse text-lg">براہ کرم انتظار کریں...</p>
     </div>
 
     <script type="module">
@@ -120,7 +120,7 @@
         import { getFirestore, collection, addDoc, setDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyC6m-mK8p0fG5w-X-S-R-R-R", // TODO: Replace with your actual key if needed
+            apiKey: "AIzaSyC6m-mK8p0fG5w-X-S-R-R-R",
             authDomain: "yariyan-news-f7d9d.firebaseapp.com",
             projectId: "yariyan-news-f7d9d",
             storageBucket: "yariyan-news-f7d9d.firebasestorage.app",
@@ -132,110 +132,98 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        const loader = document.getElementById('loader');
+        // UI Selectors
+        const overlay = document.getElementById('overlay');
+        const loginForm = document.getElementById('loginForm');
+        const regForm = document.getElementById('regForm');
+        const tabLogin = document.getElementById('tabLogin');
+        const tabReg = document.getElementById('tabReg');
 
-        // Tab Switching Logic (Registration Fix)
-        window.switchTab = (tab) => {
-            const loginForm = document.getElementById('loginForm');
-            const regForm = document.getElementById('regForm');
-            const lTab = document.getElementById('lTab');
-            const rTab = document.getElementById('rTab');
+        // Tab Switching
+        tabLogin.addEventListener('click', () => {
+            loginForm.classList.remove('hidden');
+            regForm.classList.add('hidden');
+            tabLogin.className = "w-1/2 py-5 text-xl font-bold border-b-4 border-red-700 text-red-700 bg-red-50/50";
+            tabReg.className = "w-1/2 py-5 text-xl font-bold text-gray-400 hover:bg-gray-50";
+        });
 
-            if(tab === 'login') {
-                loginForm.classList.remove('hidden');
-                regForm.classList.add('hidden');
-                lTab.className = "w-1/2 py-2 text-xl font-bold text-red-700 border-b-4 border-red-700";
-                rTab.className = "w-1/2 py-2 text-xl font-bold text-gray-400 hover:text-gray-600";
-            } else {
-                loginForm.classList.add('hidden');
-                regForm.classList.remove('hidden');
-                rTab.className = "w-1/2 py-2 text-xl font-bold text-green-600 border-b-4 border-green-600";
-                lTab.className = "w-1/2 py-2 text-xl font-bold text-gray-400 hover:text-gray-600";
-            }
-        };
+        tabReg.addEventListener('click', () => {
+            loginForm.classList.add('hidden');
+            regForm.classList.remove('hidden');
+            tabReg.className = "w-1/2 py-5 text-xl font-bold border-b-4 border-green-600 text-green-700 bg-green-50/50";
+            tabLogin.className = "w-1/2 py-5 text-xl font-bold text-gray-400 hover:bg-gray-50";
+        });
 
-        // Handle Registration
-        window.handleRegister = async () => {
+        // Registration Logic
+        document.getElementById('btnActionReg').addEventListener('click', async () => {
             const email = document.getElementById('rEmail').value;
             const pass = document.getElementById('rPass').value;
             const name = document.getElementById('rName').value;
             const role = document.getElementById('rRole').value;
-            
-            if(!email || !pass || !name) return alert("براہ کرم تمام معلومات فراہم کریں۔");
-            if(pass.length < 6) return alert("پاس ورڈ کم از کم 6 ہندسوں کا ہونا ضروری ہے۔");
 
-            loader.classList.remove('hidden');
+            if(!email || !pass || !name) return alert("تمام معلومات درج کریں۔");
+            if(pass.length < 6) return alert("پاس ورڈ کم از کم 6 ہندسوں کا ہونا چاہیے۔");
+
+            overlay.classList.remove('hidden');
             try {
-                const res = await createUserWithEmailAndPassword(auth, email, pass);
-                await setDoc(doc(db, "users", res.user.uid), { 
-                    name, email, role, date: new Date() 
-                });
-                alert("اکاؤنٹ بن گیا! اب اپنے اکاؤنٹ سے داخل ہوں۔");
+                const cred = await createUserWithEmailAndPassword(auth, email, pass);
+                await setDoc(doc(db, "users", cred.user.uid), { name, email, role, date: new Date() });
+                alert("اکاؤنٹ بن گیا! اب لاگ ان کریں۔");
                 location.reload();
-            } catch (e) { alert("Registration Error: " + e.message); }
-            loader.classList.add('hidden');
-        };
+            } catch (e) { alert("Error: " + e.message); }
+            overlay.classList.add('hidden');
+        });
 
-        // Handle Login
-        window.handleLogin = async () => {
+        // Login Logic
+        document.getElementById('btnActionLogin').addEventListener('click', async () => {
             const email = document.getElementById('lEmail').value;
             const pass = document.getElementById('lPass').value;
             const selectedRole = document.getElementById('lRole').value;
 
             if(!email || !pass) return alert("ای میل اور پاس ورڈ درج کریں۔");
 
-            loader.classList.remove('hidden');
+            overlay.classList.remove('hidden');
             try {
                 const cred = await signInWithEmailAndPassword(auth, email, pass);
-                const userDoc = await getDoc(doc(db, "users", cred.user.uid));
-                
-                if (userDoc.exists()) {
-                    const actualRole = userDoc.data().role;
-                    if (actualRole !== selectedRole) {
-                        await signOut(auth);
-                        alert(آپ کا عہدہ '${actualRole.toUpperCase()}' ہے، براہ کرم درست عہدہ منتخب کریں۔);
-                        loader.classList.add('hidden');
-                        return;
-                    }
+                const snap = await getDoc(doc(db, "users", cred.user.uid));
+                if (snap.exists() && snap.data().role !== selectedRole) {
+                    await signOut(auth);
+                    alert(آپ کا اصل عہدہ '${snap.data().role.toUpperCase()}' ہے، براہ کرم درست عہدہ منتخب کریں۔);
                 }
-            } catch (e) { alert("Login Error: ای میل یا پاس ورڈ غلط ہے۔"); }
-            loader.classList.add('hidden');
-        };
+            } catch (e) { alert("ای میل یا پاس ورڈ غلط ہے۔"); }
+            overlay.classList.add('hidden');
+        });
 
-        // Post News
-        window.postNews = async () => {
+        // Post News Logic
+        document.getElementById('btnPostNews').addEventListener('click', async () => {
             const title = document.getElementById('newsTitle').value;
             const content = document.getElementById('newsContent').value;
-            if(!title || !content) return alert("سرخی اور تفصیل لکھیں۔");
-            
-            loader.classList.remove('hidden');
+            if(!title || !content) return alert("تحریر مکمل کریں!");
+
+            overlay.classList.remove('hidden');
             try {
-                await addDoc(collection(db, "news"), { 
-                    title, content, author: auth.currentUser.email, time: new Date() 
-                });
-                alert("خبر کامیابی سے پوسٹ ہوگئی!");
+                await addDoc(collection(db, "news"), { title, content, author: auth.currentUser.email, time: new Date() });
+                alert("خبر شائع ہو گئی!");
                 document.getElementById('newsTitle').value = "";
                 document.getElementById('newsContent').value = "";
             } catch (e) { alert("Error: " + e.message); }
-            loader.classList.add('hidden');
-        };
+            overlay.classList.add('hidden');
+        });
 
-        // Check Auth Status
+        // Auth Monitor
         onAuthStateChanged(auth, async (user) => {
             if(user) {
-                document.getElementById('authSection').classList.add('hidden');
+                document.getElementById('authCard').classList.add('hidden');
                 document.getElementById('dashboard').classList.remove('hidden');
-                const userDoc = await getDoc(doc(db, "users", user.uid));
-                if(userDoc.exists()){
-                    document.getElementById('roleBadge').innerText = ${userDoc.data().name} | ${userDoc.data().role.toUpperCase()};
-                }
+                const snap = await getDoc(doc(db, "users", user.uid));
+                if(snap.exists()) document.getElementById('roleBadge').innerText = ${snap.data().name} | ${snap.data().role.toUpperCase()};
             } else {
-                document.getElementById('authSection').classList.remove('hidden');
+                document.getElementById('authCard').classList.remove('hidden');
                 document.getElementById('dashboard').classList.add('hidden');
             }
         });
 
-        window.logout = () => signOut(auth);
+        document.getElementById('btnLogout').addEventListener('click', () => signOut(auth));
     </script>
 </body>
 </html>
