@@ -1,45 +1,164 @@
 <!DOCTYPE html>
-<html lang="ur" dir="rtl">
+<html lang="ur">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yariyan News Reporter Portal</title>
+    <title>Yariyan News - Professional Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap');
-        body { font-family: 'Noto Sans Arabic', sans-serif; background-color: #f8f9fa; }
-        .bg-yariyan { background-color: #CC0000; }
+        body { font-family: 'Noto Sans Arabic', sans-serif; direction: rtl; }
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
     </style>
 </head>
-<body>
-    <div id="login-page" class="flex items-center justify-center min-h-screen bg-red-700 p-4">
-        <div class="bg-white p-8 rounded-[30px] shadow-2xl w-full max-w-sm text-center">
-            <h1 class="text-3xl font-black text-red-700 mb-6">یاریاں نیوز</h1>
-            <input type="text" id="u" placeholder="یوزر نیم" class="w-full p-4 mb-4 bg-gray-100 rounded-2xl outline-none border-none">
-            <input type="password" id="p" placeholder="پاس ورڈ" class="w-full p-4 mb-6 bg-gray-100 rounded-2xl outline-none border-none">
-            <button onclick="check()" class="w-full bg-red-700 text-white font-bold py-4 rounded-2xl shadow-lg">داخل ہوں</button>
-            <p class="mt-4 text-xs text-gray-400">Test Login: rep1 / 123</p>
-        </div>
-    </div>
+<body class="bg-gray-100 min-h-screen">
 
-    <div id="dash" class="hidden min-h-screen">
-        <header class="bg-red-700 text-white p-6 shadow-lg text-center">
-            <h1 class="text-xl font-bold">رپورٹر پورٹل</h1>
-        </header>
-        <div class="p-6 max-w-md mx-auto space-y-4">
-            <input type="text" placeholder="خبر کی سرخی..." class="w-full p-4 border rounded-2xl">
-            <textarea rows="5" placeholder="تفصیل..." class="w-full p-4 border rounded-2xl"></textarea>
-            <button onclick="alert('Success!')" class="w-full bg-red-700 text-white py-4 rounded-2xl font-bold">خبر بھیجیں</button>
-        </div>
-    </div>
+<div id="app" class="max-w-md mx-auto min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-red-700 text-white p-4 shadow-lg flex justify-between items-center">
+        <h1 class="text-xl font-bold">یاریاں نیوز پورٹل</h1>
+        <button id="logoutBtn" class="hidden bg-red-800 px-3 py-1 rounded text-sm">لاگ آؤٹ</button>
+    </header>
 
-    <script>
-        function check() {
-            if(document.getElementById('u').value === 'rep1' && document.getElementById('p').value === '123') {
-                document.getElementById('login-page').style.display = 'none';
-                document.getElementById('dash').style.display = 'block';
-            } else { alert('Ghalat Password!'); }
+    <main class="flex-grow p-4">
+        <!-- 1. LOGIN / REGISTER SCREEN -->
+        <div id="authSection" class="glass p-6 rounded-2xl shadow-xl mt-10">
+            <div class="flex border-b mb-6">
+                <button onclick="showTab('login')" id="tabLogin" class="w-1/2 py-2 border-b-2 border-red-700 font-bold">لاگ ان</button>
+                <button onclick="showTab('register')" id="tabRegister" class="w-1/2 py-2 text-gray-500">رجسٹریشن</button>
+            </div>
+
+            <div id="loginForm">
+                <input type="email" id="loginEmail" placeholder="ای میل" class="w-full p-3 mb-4 border rounded-lg outline-none focus:border-red-500 text-right">
+                <input type="password" id="loginPass" placeholder="پاس ورڈ" class="w-full p-3 mb-6 border rounded-lg outline-none focus:border-red-500 text-right">
+                <button onclick="handleLogin()" class="w-full bg-red-700 text-white py-3 rounded-lg font-bold hover:bg-red-800 transition">داخل ہوں</button>
+            </div>
+
+            <div id="registerForm" class="hidden">
+                <input type="text" id="regName" placeholder="مکمل نام" class="w-full p-3 mb-4 border rounded-lg outline-none focus:border-red-500 text-right">
+                <input type="email" id="regEmail" placeholder="ای میل" class="w-full p-3 mb-4 border rounded-lg outline-none focus:border-red-500 text-right">
+                <select id="regRole" class="w-full p-3 mb-4 border rounded-lg outline-none focus:border-red-500 text-right">
+                    <option value="reporter">رپورٹر (Reporter)</option>
+                    <option value="editor">ایڈیٹر (Editor)</option>
+                    <option value="admin">ایڈمن (Admin)</option>
+                </select>
+                <input type="password" id="regPass" placeholder="پاس ورڈ بنائیں" class="w-full p-3 mb-6 border rounded-lg outline-none focus:border-red-500 text-right">
+                <button onclick="handleRegister()" class="w-full bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700 transition">رجسٹر کریں</button>
+            </div>
+        </div>
+
+        <!-- 2. REPORTER PORTAL -->
+        <div id="reporterPortal" class="hidden mt-4">
+            <div class="bg-white p-4 rounded-xl shadow-md mb-4 border-r-4 border-blue-500">
+                <h2 class="font-bold text-blue-700 mb-2">رپورٹر ڈیش بورڈ</h2>
+                <p class="text-sm text-gray-600">خوش آمدید، <span id="userNameRep"></span></p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-md">
+                <input type="text" id="newsTitle" placeholder="خبر کی سرخی (Headline)" class="w-full p-3 mb-4 border rounded-lg text-right">
+                <textarea id="newsContent" rows="5" placeholder="خبر کی تفصیل لکھیں..." class="w-full p-3 mb-4 border rounded-lg text-right"></textarea>
+                <button onclick="submitNews()" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold">خبر بھیجیں (Submit)</button>
+            </div>
+        </div>
+
+        <!-- 3. EDITOR PORTAL -->
+        <div id="editorPortal" class="hidden mt-4">
+            <div class="bg-white p-4 rounded-xl shadow-md mb-4 border-r-4 border-orange-500">
+                <h2 class="font-bold text-orange-700">ایڈیٹر پینل</h2>
+                <p class="text-sm">خبروں کی کانٹ چھانٹ یہاں کریں</p>
+            </div>
+            <div id="editorNewsList" class="space-y-4">
+                <!-- News items for review will appear here -->
+                <p class="text-center text-gray-500 py-10">ابھی کوئی نئی خبر ریویو کے لیے نہیں ہے</p>
+            </div>
+        </div>
+
+        <!-- 4. ADMIN PORTAL -->
+        <div id="adminPortal" class="hidden mt-4">
+            <div class="bg-white p-4 rounded-xl shadow-md mb-4 border-r-4 border-red-700">
+                <h2 class="font-bold text-red-700">ایڈمن کنٹرول پینل</h2>
+                <p class="text-sm">پوری ایپ کی سیٹنگز یہاں سے کریں</p>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-4 rounded-lg shadow text-center">
+                    <p class="text-xs text-gray-500">کل رپورٹرز</p>
+                    <p class="text-2xl font-bold">12</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow text-center">
+                    <p class="text-xs text-gray-500">پبلش خبریں</p>
+                    <p class="text-2xl font-bold text-green-600">85</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="p-4 text-center text-gray-400 text-xs">
+        &copy; 2024 یاریاں نیوز نیٹ ورک - جملہ حقوق محفوظ ہیں
+    </footer>
+</div>
+
+<script type="module">
+    // --- FIREBASE SETUP ---
+    // Note: I am adding basic logic. To make this 100% functional, 
+    // you will need to link your Firebase project in a few steps.
+
+    const authSection = document.getElementById('authSection');
+    const reporterPortal = document.getElementById('reporterPortal');
+    const editorPortal = document.getElementById('editorPortal');
+    const adminPortal = document.getElementById('adminPortal');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    window.showTab = (tab) => {
+        if(tab === 'login') {
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('tabLogin').className = "w-1/2 py-2 border-b-2 border-red-700 font-bold text-red-700";
+            document.getElementById('tabRegister').className = "w-1/2 py-2 text-gray-500";
+        } else {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+            document.getElementById('tabRegister').className = "w-1/2 py-2 border-b-2 border-red-700 font-bold text-red-700";
+            document.getElementById('tabLogin').className = "w-1/2 py-2 text-gray-500";
         }
-    </script>
+    }
+
+    window.handleLogin = () => {
+        const email = document.getElementById('loginEmail').value;
+        const pass = document.getElementById('loginPass').value;
+
+        // --- Demo Simulation (Until Firebase is connected) ---
+        if(email.includes('rep')) { showPortal('reporter'); }
+        else if(email.includes('edit')) { showPortal('editor'); }
+        else if(email.includes('admin')) { showPortal('admin'); }
+        else { alert("برائے مہربانی صحیح ای میل درج کریں"); }
+    }
+
+    window.handleRegister = () => {
+        const role = document.getElementById('regRole').value;
+        alert("رجسٹریشن کامیاب! اب لاگ ان کریں۔ رول: " + role);
+        showTab('login');
+    }
+
+    function showPortal(role) {
+        authSection.classList.add('hidden');
+        logoutBtn.classList.remove('hidden');
+        if(role === 'reporter') reporterPortal.classList.remove('hidden');
+        if(role === 'editor') editorPortal.classList.remove('hidden');
+        if(role === 'admin') adminPortal.classList.remove('hidden');
+    }
+
+    logoutBtn.onclick = () => { location.reload(); }
+
+    window.submitNews = () => {
+        const title = document.getElementById('newsTitle').value;
+        if(title) {
+            alert("خبر کامیابی سے ایڈیٹر کو بھیج دی گئی ہے!");
+            document.getElementById('newsTitle').value = "";
+            document.getElementById('newsContent').value = "";
+        } else {
+            alert("سرخی لکھنا ضروری ہے");
+        }
+    }
+</script>
+
 </body>
 </html>
