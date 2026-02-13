@@ -3,102 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YARIYAN NEWS PORTAL | Professional Edition</title>
+    <title>YARIYAN NEWS | Management Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Noto Nastaliq Urdu', serif; background-color: #020617; color: #f8fafc; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        body { font-family: 'Noto Nastaliq Urdu', serif; background-color: #020617; color: #f8fafc; overflow-x: hidden; }
+        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
         .hidden { display: none !important; }
-        .input-box { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 15px; width: 100%; color: white; transition: 0.3s; }
-        .input-box:focus { border-color: #ef4444; outline: none; background: rgba(255, 255, 255, 0.1); }
-        .active-tab { border-bottom: 4px solid #ef4444; color: #ef4444; }
+        .input-style { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 15px; width: 100%; color: white; transition: 0.3s; }
+        .input-style:focus { border-color: #ef4444; outline: none; box-shadow: 0 0 15px rgba(239, 68, 68, 0.3); }
+        .active-tab { border-bottom: 4px solid #ef4444; color: #ef4444; background: rgba(239, 68, 68, 0.05); }
     </style>
 </head>
-<body class="min-h-screen">
+<body class="min-h-screen flex flex-col">
 
-    <!-- Top Logo Section -->
-    <header class="w-full py-6 flex flex-col items-center gap-4 bg-slate-900/50 border-b border-white/5">
-        <img src="https://raw.githubusercontent.com/tariq-news/yariyan-news/main/yar_00419.png" alt="Logo" class="w-20 h-20 rounded-2xl shadow-2xl border-2 border-red-600/20">
-        <h1 class="text-3xl font-bold text-white">یاریاں نیوز <span class="text-red-600">پروفیشنل پورٹل</span></h1>
-    </header>
+    <!-- Top Branding -->
+    <nav class="glass sticky top-0 z-50 px-8 py-4 flex justify-between items-center border-b border-white/5">
+        <div class="flex items-center gap-4">
+            <img src="https://raw.githubusercontent.com/tariq-news/yariyan-news/main/yar_00419.png" alt="Logo" class="w-12 h-12 rounded-xl border border-red-500/30">
+            <h1 class="text-2xl font-bold">یاریاں <span class="text-red-600">نیوز پورٹل</span></h1>
+        </div>
+        <div id="navUser" class="hidden flex items-center gap-4">
+            <div class="text-left font-sans">
+                <p id="navName" class="text-sm font-bold text-white"></p>
+                <p id="navRole" class="text-[10px] text-red-500 font-bold uppercase"></p>
+            </div>
+            <button onclick="logoutUser()" class="bg-red-600/10 text-red-500 px-4 py-2 rounded-lg border border-red-500/20 text-xs font-bold">لاگ آؤٹ</button>
+        </div>
+    </nav>
 
-    <main class="max-w-4xl mx-auto p-6 flex flex-col items-center justify-center mt-10">
-        
+    <main class="flex-grow flex items-center justify-center p-6 relative">
         <!-- Auth Container -->
-        <div id="authArea" class="w-full max-w-lg glass rounded-[2rem] overflow-hidden shadow-2xl">
-            <!-- Tabs -->
-            <div class="flex text-center border-b border-white/10">
-                <div id="tabL" class="flex-1 py-5 cursor-pointer font-bold text-xl active-tab" onclick="switchMode(true)">لاگ ان</div>
-                <div id="tabR" class="flex-1 py-5 cursor-pointer font-bold text-xl text-gray-500" onclick="switchMode(false)">رجسٹریشن</div>
+        <div id="authContainer" class="w-full max-w-lg glass rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10">
+            <div class="flex bg-white/5">
+                <div id="tabLogin" class="flex-1 py-6 cursor-pointer font-bold text-xl active-tab text-center" onclick="setAuthMode(true)">لاگ ان</div>
+                <div id="tabReg" class="flex-1 py-6 cursor-pointer font-bold text-xl text-gray-500 text-center" onclick="setAuthMode(false)">رجسٹریشن</div>
             </div>
 
-            <div class="p-8 space-y-6">
-                <!-- Registration Fields (Initially Hidden) -->
-                <div id="regOnly" class="hidden space-y-4">
-                    <input type="text" id="rName" placeholder="آپ کا پورا نام" class="input-box">
-                    <select id="rRole" class="input-box cursor-pointer">
+            <div class="p-10 space-y-6">
+                <div id="regOnlyFields" class="hidden space-y-6">
+                    <input type="text" id="regName" placeholder="آپ کا مکمل نام" class="input-style">
+                    <select id="regRole" class="input-style cursor-pointer">
                         <option value="Reporter">رپورٹر (Reporter)</option>
                         <option value="Editor">ایڈیٹر (Editor)</option>
                         <option value="Admin">ایڈمن (Admin)</option>
                     </select>
                 </div>
 
-                <!-- Shared Fields -->
-                <input type="email" id="uEmail" placeholder="ای میل (Email)" class="input-box font-sans" dir="ltr">
-                <input type="password" id="uPass" placeholder="پاس ورڈ (Password)" class="input-box font-sans" dir="ltr">
-
-                <button id="mainBtn" onclick="handleAuth()" class="w-full bg-red-600 hover:bg-red-700 py-5 rounded-xl font-bold text-2xl transition-all shadow-xl shadow-red-900/20">
-                    داخل ہوں
-                </button>
+                <input type="email" id="email" placeholder="ای میل ایڈریس" class="input-style text-left font-sans" dir="ltr">
+                <input type="password" id="pass" placeholder="پاس ورڈ" class="input-style text-left font-sans" dir="ltr">
+                
+                <button id="authBtn" onclick="runAuth()" class="w-full bg-red-600 hover:bg-red-700 py-5 rounded-2xl font-bold text-2xl transition-all shadow-xl shadow-red-900/20">داخل ہوں</button>
             </div>
         </div>
 
-        <!-- Dashboard (Hidden until Login) -->
-        <div id="dashArea" class="hidden w-full glass rounded-[2rem] p-8 space-y-8">
-            <div class="flex justify-between items-center border-b border-white/10 pb-6">
-                <div>
-                    <h2 class="text-3xl font-bold">خوش آمدید، <span id="helloName" class="text-red-500">صارف</span></h2>
-                    <p id="helloRole" class="text-gray-400 text-sm font-sans uppercase tracking-widest"></p>
-                </div>
-                <button onclick="logout()" class="bg-red-600/10 text-red-500 border border-red-500/20 px-6 py-2 rounded-lg font-bold">لاگ آؤٹ</button>
+        <!-- Dashboard Container -->
+        <div id="dashContainer" class="hidden w-full max-w-5xl glass p-10 rounded-[3rem] border border-white/10">
+            <div class="flex flex-col md:flex-row justify-between items-center border-b border-white/10 pb-10 mb-10">
+                <h2 class="text-4xl font-bold">خوش آمدید، <span id="welcomeName" class="text-red-600">صارف</span></h2>
+                <div class="bg-red-600/10 border border-red-500/20 px-6 py-2 rounded-xl text-red-500 font-bold uppercase text-xs tracking-widest">System Online</div>
             </div>
 
-            <div class="space-y-4">
-                <input type="text" id="newsTitle" placeholder="خبر کی سرخی..." class="input-box text-2xl font-bold">
-                <textarea id="newsText" rows="8" placeholder="خبر کی مکمل تفصیل..." class="input-box text-lg"></textarea>
-                <button onclick="postNews()" class="w-full bg-red-600 py-5 rounded-xl font-bold text-xl">خبر شائع کریں</button>
+            <div class="space-y-6">
+                <input type="text" id="postTitle" placeholder="خبر کی سرخی (Headline)..." class="input-style text-2xl font-bold py-6">
+                <textarea id="postContent" rows="10" placeholder="خبر کی تفصیلات یہاں لکھیں..." class="input-style text-lg"></textarea>
+                <button onclick="saveNews()" class="w-full bg-red-600 hover:bg-red-700 py-6 rounded-2xl font-bold text-2xl">خبر شائع کریں</button>
             </div>
         </div>
-
     </main>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        // ==========================================
-        // // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBmVF6wSmLx595J4cWCxrBaNSN_yuD26rg",
-  authDomain: "yariyan-portal-final.firebaseapp.com",
-  projectId: "yariyan-portal-final",
-  storageBucket: "yariyan-portal-final.firebasestorage.app",
-  messagingSenderId: "371122539052",
-  appId: "1:371122539052:web:1e0960302a1a5d4c049f89",
-  measurementId: "G-ZEN0NYHR98"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app); (RP)
-        // =====
-
+    <div id="spinner" class="hidden fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col justify-center items-center z-[100]">
+        <div class="w-1
